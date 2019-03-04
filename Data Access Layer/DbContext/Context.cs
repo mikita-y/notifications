@@ -12,9 +12,8 @@ namespace DataAccessLayer.Models
         {
         }
 
-        public NotifyContext()
+        public NotifyContext() 
         {
-            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
