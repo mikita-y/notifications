@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 
-namespace Data_Access_Layer.Models
+namespace DataAccessLayer.Models
 {
     [DataContract]
     public class Action
@@ -14,7 +14,9 @@ namespace Data_Access_Layer.Models
         [DataMember]
         public string Title { get; set; }
         [DataMember]
-        public byte[] Icon { get; set; }
-        public int Id_of_notification { get; set; }
+        public string Icon { get; set; }
+
+        public int NotificationId { get; set; }
+        public Notification Notification { get; set; }
     }
 }

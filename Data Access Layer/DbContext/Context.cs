@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data_Access_Layer.Models
+namespace DataAccessLayer.Models
 {
     public class NotifyContext : DbContext
     {
@@ -27,6 +27,4 @@ namespace Data_Access_Layer.Models
         public DbSet<Log> Logs { get; set; }
     }
 
-    
-    
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Data_Access_Layer.Models;
+using DataAccessLayer.Models;
 
-namespace Data_Access_Layer.Repositories
+namespace DataAccessLayer.Repositories
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {

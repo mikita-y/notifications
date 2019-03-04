@@ -4,7 +4,7 @@ using System.Text;
 using System.Runtime.Serialization;
 
 
-namespace Data_Access_Layer.Models
+namespace DataAccessLayer.Models
 {
     [DataContract]
     public class Notification
@@ -15,11 +15,15 @@ namespace Data_Access_Layer.Models
         [DataMember]
         public string Body { get; set; }
         [DataMember]
-        public byte[] Icon { get; set; }
+        public string Icon { get; set; }
         [DataMember]
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         [DataMember]
-        public Action[] Actions { get; set; }
-        public int Id_of_user { get; set; }
+        public List<Action> Actions { get; set; }
+
+        public List<Log> Logs { get; set; }
+
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

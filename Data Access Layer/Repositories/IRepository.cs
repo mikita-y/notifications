@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data_Access_Layer.Repositories
+namespace DataAccessLayer.Repositories
 {
     public interface IRepository<T> where T : class
     {

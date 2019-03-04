@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data Access Layer", "Data Access Layer\Data Access Layer.csproj", "{DB7DDE01-1142-4F18-9EB9-27624B24FCD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "Data Access Layer\DataAccessLayer.csproj", "{DB7DDE01-1142-4F18-9EB9-27624B24FCD2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "ConsoleApp2\Test.csproj", "{F5BEA7FC-C7B7-4A94-97DC-0914C69E57D5}"
 EndProject

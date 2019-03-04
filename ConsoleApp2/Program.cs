@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data_Access_Layer.Models;
-using Data_Access_Layer.Repositories;
+using DataAccessLayer.Models;
+using DataAccessLayer.Repositories;
 using System.Runtime.Serialization.Json;
 
 namespace Test
@@ -17,18 +17,18 @@ namespace Test
             using (NotifyContext db = new NotifyContext())
             {
                 
-                User user1 = new User { Name = "Nia", Password = "stut" };
-                User user2 = new User {Name = "Natasha", Password = "mentor" };
+                User user1 = new User { Name = "Nia", };
+                User user2 = new User {Name = "Natasha" };
 
                 var Repository = new UserRepository(db);
 
-                //Repository.Add(user1);
-                //Repository.Add(user2);
+                Repository.Add(user1);
+                Repository.Add(user2);
 
                 var All = Repository.GetAll();
                 foreach(User u in All)
                 {
-                    Console.WriteLine($"{u.Id}.{u.Name} - {u.Password}");
+                    Console.WriteLine($"{u.Id}.{u.Name} ");
                 }
                 User user3 = Repository.Get(1);
                 user3.Name = ".NET";
@@ -38,7 +38,7 @@ namespace Test
                 All = Repository.GetAll();
                 foreach (User u in All)
                 {
-                    Console.WriteLine($"{u.Id}.{u.Name} - {u.Password}");
+                    Console.WriteLine($"{u.Id}.{u.Name} ");
                 }
                 Console.WriteLine("PAW");
 
