@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Data_Access_Layer.DbContext.Configuration;
 
 namespace DataAccessLayer.Models
 {
@@ -37,14 +36,6 @@ namespace DataAccessLayer.Models
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
             modelBuilder.ApplyConfiguration(new LogConfiguration());
             modelBuilder.ApplyConfiguration(new ActionConfiguration());
-        }
-    }
-
-    public class ActionConfiguration : IEntityTypeConfiguration<Action>
-    {
-        public void Configure(EntityTypeBuilder<Action> builder)
-        {
-
         }
     }
 }
