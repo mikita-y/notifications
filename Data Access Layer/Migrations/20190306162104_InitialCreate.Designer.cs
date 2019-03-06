@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data_Access_Layer.Migrations
 {
     [DbContext(typeof(NotifyContext))]
-    [Migration("20190304145504_InitialCreate")]
+    [Migration("20190306162104_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,24 +77,22 @@ namespace Data_Access_Layer.Migrations
 
                     b.Property<int>("UserId");
 
+                    b.Property<string>("UserName");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserName");
 
                     b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("Name")
-                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(20);
 
-                    b.HasKey("Id");
+                    b.HasKey("Name");
 
                     b.ToTable("Users");
                 });
@@ -119,8 +117,7 @@ namespace Data_Access_Layer.Migrations
                 {
                     b.HasOne("DataAccessLayer.Models.User", "User")
                         .WithMany("Notifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserName");
                 });
 #pragma warning restore 612, 618
         }

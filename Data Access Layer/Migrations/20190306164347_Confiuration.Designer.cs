@@ -4,14 +4,16 @@ using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data_Access_Layer.Migrations
 {
     [DbContext(typeof(NotifyContext))]
-    partial class NotifyContextModelSnapshot : ModelSnapshot
+    [Migration("20190306164347_Confiuration")]
+    partial class Confiuration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,9 +50,7 @@ namespace Data_Access_Layer.Migrations
 
                     b.Property<string>("Change");
 
-                    b.Property<DateTime>("Date")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasComputedColumnSql("GETDATE()");
+                    b.Property<DateTime>("Date");
 
                     b.Property<int>("NotificationId");
 
@@ -58,7 +58,7 @@ namespace Data_Access_Layer.Migrations
 
                     b.HasIndex("NotificationId");
 
-                    b.ToTable("Log");
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Notification", b =>
@@ -77,11 +77,9 @@ namespace Data_Access_Layer.Migrations
 
                     b.Property<string>("Title")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
                         .HasDefaultValue("Notification");
 
-                    b.Property<string>("UserName")
-                        .IsRequired();
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 
@@ -121,8 +119,7 @@ namespace Data_Access_Layer.Migrations
                 {
                     b.HasOne("DataAccessLayer.Models.User", "User")
                         .WithMany("Notifications")
-                        .HasForeignKey("UserName")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserName");
                 });
 #pragma warning restore 612, 618
         }
