@@ -38,35 +38,6 @@ namespace DataAccessLayer.Models
             modelBuilder.ApplyConfiguration(new LogConfiguration());
             modelBuilder.ApplyConfiguration(new ActionConfiguration());
         }
-
-    }
-
-    public class UserConfiguration : IEntityTypeConfiguration<User>
-    {
-        public void Configure(EntityTypeBuilder<User> builder)
-        {
-            builder.ToTable("Users").HasKey(u => u.Name);
-            builder.ToTable("Users").Property(u => u.Name).HasMaxLength(20);
-        }
-    }
-
-    public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
-    {
-        public void Configure(EntityTypeBuilder<Notification> builder)
-        {
-            builder.ToTable("Notifications").Property(n => n.Title).HasDefaultValue("Notification").HasMaxLength(20);
-            builder.ToTable("Notifications").Property(n => n.Body).HasDefaultValue("Text");
-            builder.ToTable("Notifications").Property(n => n.UserName).IsRequired();
-            builder.ToTable("Notifications").HasOne(n => n.User).WithMany(u => u.Notifications).HasForeignKey(n => n.UserName);
-        }
-    }
-
-    public class LogConfiguration : IEntityTypeConfiguration<Log>
-    {
-        public void Configure(EntityTypeBuilder<Log> builder)
-        {
-            builder.ToTable("Log").Property(l => l.Date).HasComputedColumnSql("GETDATE()");
-        }
     }
 
     public class ActionConfiguration : IEntityTypeConfiguration<Action>
