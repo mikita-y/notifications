@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data_Access_Layer.Migrations
 {
     [DbContext(typeof(NotifyContext))]
-    [Migration("20190306164347_Confiuration")]
-    partial class Confiuration
+    [Migration("20190307092826_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,7 +50,8 @@ namespace Data_Access_Layer.Migrations
 
                     b.Property<string>("Change");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date");
 
                     b.Property<int>("NotificationId");
 
@@ -58,7 +59,7 @@ namespace Data_Access_Layer.Migrations
 
                     b.HasIndex("NotificationId");
 
-                    b.ToTable("Logs");
+                    b.ToTable("Log");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Notification", b =>
@@ -77,9 +78,11 @@ namespace Data_Access_Layer.Migrations
 
                     b.Property<string>("Title")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
                         .HasDefaultValue("Notification");
 
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -119,7 +122,8 @@ namespace Data_Access_Layer.Migrations
                 {
                     b.HasOne("DataAccessLayer.Models.User", "User")
                         .WithMany("Notifications")
-                        .HasForeignKey("UserName");
+                        .HasForeignKey("UserName")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

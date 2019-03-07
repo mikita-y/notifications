@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data_Access_Layer.Migrations
 {
     [DbContext(typeof(NotifyContext))]
-    [Migration("20190306162104_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190307093925_ChangeLog")]
+    partial class ChangeLog
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,7 +50,8 @@ namespace Data_Access_Layer.Migrations
 
                     b.Property<string>("Change");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("NotificationId");
 
@@ -58,7 +59,7 @@ namespace Data_Access_Layer.Migrations
 
                     b.HasIndex("NotificationId");
 
-                    b.ToTable("Logs");
+                    b.ToTable("Log");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Notification", b =>
@@ -67,17 +68,21 @@ namespace Data_Access_Layer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Body");
+                    b.Property<string>("Body")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue("Text");
 
                     b.Property<string>("Icon");
 
                     b.Property<string>("Image");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasDefaultValue("Notification");
 
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserName")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -117,7 +122,8 @@ namespace Data_Access_Layer.Migrations
                 {
                     b.HasOne("DataAccessLayer.Models.User", "User")
                         .WithMany("Notifications")
-                        .HasForeignKey("UserName");
+                        .HasForeignKey("UserName")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

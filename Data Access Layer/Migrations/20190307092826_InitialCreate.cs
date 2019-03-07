@@ -25,12 +25,11 @@ namespace Data_Access_Layer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Title = table.Column<string>(nullable: true),
-                    Body = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 20, nullable: true, defaultValue: "Notification"),
+                    Body = table.Column<string>(nullable: true, defaultValue: "Text"),
                     Icon = table.Column<string>(nullable: true),
                     Image = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false),
-                    UserName = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,7 +39,7 @@ namespace Data_Access_Layer.Migrations
                         column: x => x.UserName,
                         principalTable: "Users",
                         principalColumn: "Name",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,20 +65,20 @@ namespace Data_Access_Layer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Logs",
+                name: "Log",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Date = table.Column<DateTime>(nullable: false),
+                    Date = table.Column<DateTime>(type: "date", nullable: false),
                     Change = table.Column<string>(nullable: true),
                     NotificationId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Logs", x => x.Id);
+                    table.PrimaryKey("PK_Log", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Logs_Notifications_NotificationId",
+                        name: "FK_Log_Notifications_NotificationId",
                         column: x => x.NotificationId,
                         principalTable: "Notifications",
                         principalColumn: "Id",
@@ -92,8 +91,8 @@ namespace Data_Access_Layer.Migrations
                 column: "NotificationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Logs_NotificationId",
-                table: "Logs",
+                name: "IX_Log_NotificationId",
+                table: "Log",
                 column: "NotificationId");
 
             migrationBuilder.CreateIndex(
@@ -108,7 +107,7 @@ namespace Data_Access_Layer.Migrations
                 name: "Actions");
 
             migrationBuilder.DropTable(
-                name: "Logs");
+                name: "Log");
 
             migrationBuilder.DropTable(
                 name: "Notifications");

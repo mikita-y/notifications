@@ -11,7 +11,7 @@ namespace Data_Access_Layer.DbContext.Configuration
     {
         public void Configure(EntityTypeBuilder<Log> builder)
         {
-            builder.ToTable("Log").Property(l => l.Date).HasComputedColumnSql("GETDATE()");
+            builder.ToTable("Log").Property(l => l.Date).HasColumnType("datetime2");
         }
     }
 }

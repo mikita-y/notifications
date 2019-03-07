@@ -49,8 +49,7 @@ namespace Data_Access_Layer.Migrations
                     b.Property<string>("Change");
 
                     b.Property<DateTime>("Date")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasComputedColumnSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("NotificationId");
 
