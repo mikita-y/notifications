@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Models;
 
-namespace Data_Access_Layer.DbContext.Configuration
+namespace DataAccessLayer.DbContext.Configuration
 {
     public class LogConfiguration : IEntityTypeConfiguration<Log>
     {
         public void Configure(EntityTypeBuilder<Log> builder)
         {
-            builder.ToTable("Log").Property(l => l.Date).HasColumnType("datetime2");
+            builder.Property(l => l.Date).HasColumnType("datetime2");
         }
     }
 }

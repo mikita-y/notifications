@@ -6,12 +6,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace DataAccessLayer.Models
 {
-    public class User
+    public class  User : IdentityUser
     {
-        [Required(ErrorMessage = "Not written the name")]
-        [StringLength(20, MinimumLength = 2, ErrorMessage = "Invalid name length")]
-        public string Name { get; set; }
         public List<Notification> Notifications { get; set; }
-
+        //public string CustomTag { get; set; }
     }
 }

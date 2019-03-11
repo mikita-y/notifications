@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Models;
 
-namespace Data_Access_Layer.DbContext.Configuration
+namespace DataAccessLayer.DbContext.Configuration
 {
     public class ActionConfiguration : IEntityTypeConfiguration<DataAccessLayer.Models.Action>
     {

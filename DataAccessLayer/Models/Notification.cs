@@ -23,7 +23,7 @@ namespace DataAccessLayer.Models
 
         public List<Log> Logs { get; set; }
 
-        public string UserName { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
     }
 }
