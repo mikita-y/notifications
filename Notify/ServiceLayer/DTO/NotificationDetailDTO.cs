@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ServiceLayer
+namespace ServiceLayer.DTO
 {
     public class NotificationDetailDTO
     {
@@ -11,6 +11,5 @@ namespace ServiceLayer
         public string Body { get; set; }
         public string Icon { get; set; }
         public string Image { get; set; }
-
     }
 }

@@ -4,15 +4,16 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.DbContext.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using DataAccessLayer.Models;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.DbContext
 {
     public class NotifyContext : IdentityDbContext<User>
     {
         public const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=NotifyDB;Trusted_Connection=True;";
 
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<Action> Actions { get; set; }
+        public DbSet<Models.Action> Actions { get; set; }
         public DbSet<Log> Logs { get; set; }
 
         public NotifyContext(DbContextOptions<NotifyContext> options)

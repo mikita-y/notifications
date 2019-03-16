@@ -12,6 +12,5 @@ namespace ServiceLayer.DTO
         {
             return items.Select(n => new NotificationDTO { Id = n.Id, Title = n.Title });
         }
-
     }
 }

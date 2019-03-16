@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataAccessLayer.Models;
+using System.Text;
 
-namespace ServiceLayer
+namespace ServiceLayer.DTO
 {
     public class NotificationDTO
     {

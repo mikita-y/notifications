@@ -2,27 +2,42 @@
 using System.Collections.Generic;
 using System.Text;
 using DataAccessLayer.Models;
-using ServiceLayer.Interfaces;
+using DataAccessLayer;
+using DataAccessLayer.DbContext;
 using ServiceLayer.DTO;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-
-namespace ServiceLayer
+namespace ServiceLayer.ListService
 {
-    public enum Sorting { AZ, ZA, Newer, Older };
-    public enum FilterBy { Title, Body, Image, Picture };
-
-    public class NotificationListServise : INotificationSorting, INotificationFiltering
+    public class NotificationListService : IListService<NotificationDTO>
     {
+
+        private NotifyContext context; //     ?????????????
+
         private IQueryable<Notification> notifications;
 
-        public NotificationListServise(IQueryable<Notification> DatabaseNotifications)
+        public NotificationListService(NotifyContext _context)
         {
-            notifications = DatabaseNotifications;
+            context = _context;  //
+            notifications = context.Notifications;
         }
 
-        public void SortingBy(Sorting s)
+
+        public void FilterSortingPaging(Сriterion criterion)
+        {
+            notifications = context.Notifications;
+
+            SortingBy(criterion.sorting);
+            if(criterion.filterby != null)
+                Filter(criterion.filterby, criterion.SearchText);
+            Paging(criterion.Page, criterion.PageSize);
+        }
+        public List<NotificationDTO> GetItems()
+        {
+            return notifications.GetNotificationDTO().ToList();
+        }
+
+        private void SortingBy(Sorting s)
         {
             switch (s)
             {
@@ -32,7 +47,7 @@ namespace ServiceLayer
                 case Sorting.ZA:
                     notifications = notifications.OrderByDescending(n => n.Title);
                     break;
-                case Sorting.Newer :
+                case Sorting.Newer:
                     {
                         notifications = notifications.SelectMany(n => n.Logs,
                             (n, l) => new { notification = n, Log = l })
@@ -54,17 +69,17 @@ namespace ServiceLayer
             }
         }
 
-        public void Filter( List<FilterBy> filterby, string text = "")
+        private void Filter(FilterBy[] filterby, string searchtext = "")
         {
-            foreach(FilterBy f in filterby)
+            foreach (FilterBy f in filterby)
             {
-                switch(f)
+                switch (f)
                 {
                     case FilterBy.Title:
-                        notifications = notifications.Where(n => n.Title.Contains(text));
+                        notifications = notifications.Where(n => n.Title.Contains(searchtext));
                         break;
                     case FilterBy.Body:
-                        notifications = notifications.Where(n => n.Body.Contains(text));
+                        notifications = notifications.Where(n => n.Body.Contains(searchtext));
                         break;
                     case FilterBy.Picture:
                         notifications = notifications.Where(n => n.Icon != null);
@@ -77,14 +92,17 @@ namespace ServiceLayer
             }
         }
 
+        private void Paging(int page, int pagesize)
+        {
+            notifications = notifications.GetPageOfItems(page, pagesize);
+        }
+
+
         public IQueryable<Notification> GetNotifications()
         {
             return notifications;
         }
-
-        public IQueryable<NotificationDTO> GetNotificationDTOs()
-        {
-            return notifications.GetNotificationDTO();
-        }
     }
+
+   
 }
