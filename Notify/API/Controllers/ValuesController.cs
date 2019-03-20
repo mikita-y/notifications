@@ -2,19 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccessLayer.DbContext;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    // Контроллер для тестирования
+    [Authorize]
     [Route("api/[controller]")]
-    [ApiController]
+    //[ApiController]
     public class ValuesController : ControllerBase
     {
+        private NotifyContext context;
+
+        public ValuesController(NotifyContext _context)
+        {
+            context = _context;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var a = context.Users.Select(u => u.UserName).ToList();
+            string b = "";
+            foreach (string c in a)
+                b = b + c + "; ";
+            return Ok(b);
+            //return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5

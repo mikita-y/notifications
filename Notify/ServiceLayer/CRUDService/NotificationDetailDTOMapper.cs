@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 using DataAccessLayer.Models;
 
-namespace ServiceLayer.DTO
+namespace ServiceLayer.CRUDService
 {
     public static class NotificationDetailDTOMapper
     {

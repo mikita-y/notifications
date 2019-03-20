@@ -4,39 +4,32 @@ using System.Text;
 using DataAccessLayer.Models;
 using DataAccessLayer;
 using DataAccessLayer.DbContext;
-using ServiceLayer.DTO;
 using System.Linq;
 
 namespace ServiceLayer.ListService
 {
-    public class NotificationListService : IListService<NotificationDTO>
+    public class NotificationListService : IListService
     {
 
-        private NotifyContext context; //     ?????????????
+        private NotifyContext context;
 
         private IQueryable<Notification> notifications;
 
         public NotificationListService(NotifyContext _context)
         {
-            context = _context;  //
-            notifications = context.Notifications;
+            context = _context;  
         }
 
-
-        public void FilterSortingPaging(Сriterion criterion)
+        public List<NotificationDTO> FilterSortingPaging(Criterion criterion)
         {
-            notifications = context.Notifications;
-
-            SortingBy(criterion.sorting);
-            if(criterion.filterby != null)
-                Filter(criterion.filterby, criterion.SearchText);
+            notifications = context.Notifications.Where(x => x.User.UserName == criterion.UserName);
+            SortingBy(criterion.Sorting);
+            if(criterion.Filterby != null)
+                Filter(criterion.Filterby, criterion.SearchText);
             Paging(criterion.Page, criterion.PageSize);
-        }
-        public List<NotificationDTO> GetItems()
-        {
             return notifications.GetNotificationDTO().ToList();
         }
-
+ 
         private void SortingBy(Sorting s)
         {
             switch (s)
@@ -96,13 +89,5 @@ namespace ServiceLayer.ListService
         {
             notifications = notifications.GetPageOfItems(page, pagesize);
         }
-
-
-        public IQueryable<Notification> GetNotifications()
-        {
-            return notifications;
-        }
     }
-
-   
 }

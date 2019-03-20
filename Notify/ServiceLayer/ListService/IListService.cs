@@ -4,9 +4,8 @@ using System.Text;
 
 namespace ServiceLayer.ListService
 {
-    public interface IListService<T>
+    public interface IListService
     {
-        void FilterSortingPaging(Сriterion criterion);
-        List<T> GetItems();
+        List<NotificationDTO> FilterSortingPaging(Criterion criterion);
     }
 }
