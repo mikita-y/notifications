@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceLayer", "ServiceLaye
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{5506690E-B28A-4E5C-8477-EE9551638270}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB", "WEB\WEB.csproj", "{AA4F1ADA-4D02-4CCD-BBCB-063B928178FB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{5506690E-B28A-4E5C-8477-EE9551638270}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5506690E-B28A-4E5C-8477-EE9551638270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5506690E-B28A-4E5C-8477-EE9551638270}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA4F1ADA-4D02-4CCD-BBCB-063B928178FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA4F1ADA-4D02-4CCD-BBCB-063B928178FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA4F1ADA-4D02-4CCD-BBCB-063B928178FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA4F1ADA-4D02-4CCD-BBCB-063B928178FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
