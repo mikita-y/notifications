@@ -6,6 +6,6 @@ namespace ServiceLayer.ListService
 {
     public interface IListService
     {
-        List<NotificationDTO> FilterSortingPaging(Criterion criterion);
+        ObjectNotificationsDTO FilterSortingPaging(Criterion criterion);
     }
 }

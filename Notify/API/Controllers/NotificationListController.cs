@@ -24,7 +24,7 @@ namespace API.Controllers
 
         // POST api/notifications/
         [HttpPost]
-        public IEnumerable<NotificationDTO> Post([FromBody]Criterion I)
+        public ObjectNotificationsDTO Post([FromBody]Criterion I)
         {
             return service.FilterSortingPaging(I);
         }

@@ -20,14 +20,17 @@ namespace ServiceLayer.ListService
             context = _context;  
         }
 
-        public List<NotificationDTO> FilterSortingPaging(Criterion criterion)
+        public ObjectNotificationsDTO FilterSortingPaging(Criterion criterion)
         {
             notifications = context.Notifications.Where(x => x.User.UserName == criterion.UserName);
+
+            var _AllPages = notifications.Count();
             SortingBy(criterion.Sorting);
             if(criterion.Filterby != null)
                 Filter(criterion.Filterby, criterion.SearchText);
             Paging(criterion.Page, criterion.PageSize);
-            return notifications.GetNotificationDTO().ToList();
+            var _Notifications = notifications.GetNotificationDTO().ToList();
+            return new ObjectNotificationsDTO { PageNumber = criterion.Page, AllPages = _AllPages, Notifications = _Notifications };
         }
  
         private void SortingBy(Sorting s)
