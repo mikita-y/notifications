@@ -14,7 +14,8 @@ namespace DataAccessLayer.DbContext
 
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Models.Action> Actions { get; set; }
-        public DbSet<Log> Logs { get; set; }
+        public DbSet<NotificationLog> NotificationLogs { get; set; }
+        public DbSet<LogEntry> LogEntries { get; set; }
 
         public NotifyContext(DbContextOptions<NotifyContext> options)
             : base(options)

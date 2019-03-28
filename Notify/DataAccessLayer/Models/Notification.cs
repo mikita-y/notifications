@@ -21,7 +21,7 @@ namespace DataAccessLayer.Models
         [DataMember]
         public List<Action> Actions { get; set; }
 
-        public List<Log> Logs { get; set; }
+        public List<NotificationLog> Logs { get; set; }
 
         public string UserId { get; set; }
         public User User { get; set; }

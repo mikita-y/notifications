@@ -4,14 +4,16 @@ using DataAccessLayer.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data_Access_Layer.Migrations
 {
     [DbContext(typeof(NotifyContext))]
-    partial class NotifyContextModelSnapshot : ModelSnapshot
+    [Migration("20190328174056_AddingLogEntries")]
+    partial class AddingLogEntries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,7 +116,7 @@ namespace Data_Access_Layer.Migrations
 
                     b.HasIndex("NotificationId");
 
-                    b.ToTable("NotificationLogs");
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.User", b =>
