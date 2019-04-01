@@ -18,7 +18,7 @@ namespace WEB.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            log.Info("Working");
+            log.Info("info");
             return new string[] { "value1", "value2" };
         }
 

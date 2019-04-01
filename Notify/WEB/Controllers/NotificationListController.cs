@@ -11,7 +11,7 @@ using ServiceLayer.NotificationListService;
 
 namespace WEB.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     public class NotificationListController : Controller
     {
@@ -22,11 +22,21 @@ namespace WEB.Controllers
             service = new NotificationListService(context);
         }
 
+        // Метод для теста
+        [HttpGet]
+        public IActionResult Get()
+        {
+            Criterion I = new Criterion { UserId = "a9f6eb54-2f3a-481d-84db-494d59803843", Sorting = Sorting.AZ };
+            var obj = service.FilterSortingPaging(I);
+            return Ok(obj);
+        }
+
+
         // POST api/notificationlist/
         [HttpPost]
         public IActionResult  Post([FromBody]Criterion I)
         {
-            //ObjectNotificationsDTO
+            //возвращает ObjectNotificationsDTO
             return View(service.FilterSortingPaging(I));
         }
     }

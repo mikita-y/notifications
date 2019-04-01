@@ -27,17 +27,17 @@ namespace ServiceLayer.NotificationListService
                     break;
                 case Sorting.Newer:
                     {
-                        notifications = notifications.SelectMany(n => n.Logs,
+                        notifications = notifications.SelectMany(n => n.NotificationLogs,
                             (n, l) => new { notification = n, Log = l })
-                          .Where(p => p.Log.Date == p.notification.Logs.Max(l => l.Date))  // Max - дата изменения, Min - дата создания
+                          .Where(p => p.Log.Date == p.notification.NotificationLogs.Max(l => l.Date))  // Max - дата изменения, Min - дата создания
                           .OrderByDescending(p => p.Log.Date).Select(p => p.notification);
                     }
                     break;
                 case Sorting.Older:
                     {
-                        notifications = notifications.SelectMany(n => n.Logs,
+                        notifications = notifications.SelectMany(n => n.NotificationLogs,
                             (n, l) => new { notification = n, Log = l })
-                          .Where(p => p.Log.Date == p.notification.Logs.Max(l => l.Date))  // Max - дата изменения, Min - дата создания
+                          .Where(p => p.Log.Date == p.notification.NotificationLogs.Max(l => l.Date))  // Max - дата изменения, Min - дата создания
                           .OrderBy(p => p.Log.Date)
                           .Select(p => p.notification);
                     }
@@ -52,26 +52,26 @@ namespace ServiceLayer.NotificationListService
         {
             FilterBy[] filterby = criterion.Filterby;
             string searchtext = criterion.SearchText;
-
-            foreach (FilterBy f in filterby)
-            {
-                switch (f)
+            if(filterby != null)
+                foreach (FilterBy f in filterby)
                 {
-                    case FilterBy.Title:
-                        notifications = notifications.Where(n => n.Title.Contains(searchtext));
-                        break;
-                    case FilterBy.Body:
-                        notifications = notifications.Where(n => n.Body.Contains(searchtext));
-                        break;
-                    case FilterBy.Picture:
-                        notifications = notifications.Where(n => n.Icon != null);
-                        break;
-                    case FilterBy.Image:
-                        notifications = notifications.Where(n => n.Image != null);
-                        break;
-                    default: throw new Exception("Exception in NotificationServise.Filter");
+                    switch (f)
+                    {
+                        case FilterBy.Title:
+                            notifications = notifications.Where(n => n.Title.Contains(searchtext));
+                            break;
+                        case FilterBy.Body:
+                            notifications = notifications.Where(n => n.Body.Contains(searchtext));
+                            break;
+                        case FilterBy.Picture:
+                            notifications = notifications.Where(n => n.Icon != null);
+                            break;
+                        case FilterBy.Image:
+                            notifications = notifications.Where(n => n.Image != null);
+                            break;
+                        default: throw new Exception("Exception in NotificationServise.Filter");
+                    }
                 }
-            }
             return notifications;
         }
         

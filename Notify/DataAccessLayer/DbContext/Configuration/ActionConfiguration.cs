@@ -7,9 +7,9 @@ using DataAccessLayer.Models;
 
 namespace DataAccessLayer.DbContext.Configuration
 {
-    public class ActionConfiguration : IEntityTypeConfiguration<DataAccessLayer.Models.Action>
+    public class ActionConfiguration : IEntityTypeConfiguration<NotificationAction>
     {
-        public void Configure(EntityTypeBuilder<DataAccessLayer.Models.Action> builder)
+        public void Configure(EntityTypeBuilder<NotificationAction> builder)
         {
 
         }

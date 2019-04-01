@@ -13,7 +13,7 @@ namespace DataAccessLayer.DbContext
         public const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=NotifyDB;Trusted_Connection=True;";
 
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<Models.Action> Actions { get; set; }
+        public DbSet<NotificationAction> NotificationActions { get; set; }
         public DbSet<NotificationLog> NotificationLogs { get; set; }
         public DbSet<LogEntry> LogEntries { get; set; }
 

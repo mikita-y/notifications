@@ -4,20 +4,43 @@ using DataAccessLayer.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data_Access_Layer.Migrations
 {
     [DbContext(typeof(NotifyContext))]
-    partial class NotifyContextModelSnapshot : ModelSnapshot
+    [Migration("20190331132025_LogEntries")]
+    partial class LogEntries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DataAccessLayer.Models.Action", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Answer");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<int>("NotificationId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationId");
+
+                    b.ToTable("Actions");
+                });
 
             modelBuilder.Entity("DataAccessLayer.Models.LogEntry", b =>
                 {
@@ -79,27 +102,6 @@ namespace Data_Access_Layer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.NotificationAction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Answer");
-
-                    b.Property<string>("Icon");
-
-                    b.Property<int>("NotificationId");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NotificationId");
-
-                    b.ToTable("NotificationActions");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.NotificationLog", b =>
@@ -284,6 +286,14 @@ namespace Data_Access_Layer.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("DataAccessLayer.Models.Action", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Notification", "Notification")
+                        .WithMany("Actions")
+                        .HasForeignKey("NotificationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("DataAccessLayer.Models.Notification", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.User", "User")
@@ -292,18 +302,10 @@ namespace Data_Access_Layer.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.NotificationAction", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Notification", "Notification")
-                        .WithMany("NotificationActions")
-                        .HasForeignKey("NotificationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("DataAccessLayer.Models.NotificationLog", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.Notification", "Notification")
-                        .WithMany("NotificationLogs")
+                        .WithMany("Logs")
                         .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

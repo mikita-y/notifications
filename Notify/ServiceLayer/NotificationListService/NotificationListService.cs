@@ -22,12 +22,15 @@ namespace ServiceLayer.NotificationListService
 
         public ObjectNotificationsDTO FilterSortingPaging(Criterion criterion)
         {
+            notifications = context.Notifications.Where(x => x.UserId == criterion.UserId);
+
             notifications = context.Notifications.Where(x => x.UserId == criterion.UserId).SortingBy(criterion).Filter(criterion);
-
-            //notifications = notifications.SortingBy(criterion).Filter(criterion);
-
+            
+            foreach (Notification n in notifications)
+                Console.WriteLine(n.Title);
             AllPages = notifications.Count();
-
+            if (criterion.PageSize == 0)
+                criterion.PageSize = 10;
             var NotificationsDTOList = notifications.GetPageOfItems(criterion.Page, criterion.PageSize).GetNotificationDTO().ToList();
 
             return new ObjectNotificationsDTO { PageNumber = criterion.Page, AllPages = this.AllPages, Notifications = NotificationsDTOList };

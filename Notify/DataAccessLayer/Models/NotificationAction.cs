@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace DataAccessLayer.Models
 {
     [DataContract]
-    public class Action
+    public class NotificationAction
     {
         public int Id { get; set; }
         [DataMember]

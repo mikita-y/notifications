@@ -1,29 +1,18 @@
-﻿using System;
+﻿using DataAccessLayer.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Runtime.Serialization;
-using System.ComponentModel.DataAnnotations;
 
-namespace DataAccessLayer.Models
+namespace ServiceLayer.NotificationCRUDService
 {
-    [DataContract]
-    public class Notification
+    public class NotificationDetailDTO
     {
         public int Id { get; set; }
-        [DataMember]
         public string Title { get; set; }
-        [DataMember]
         public string Body { get; set; }
-        [DataMember]
         public string Icon { get; set; }
-        [DataMember]
         public string Image { get; set; }
-        [DataMember]
         public List<NotificationAction> NotificationActions { get; set; }
-
         public List<NotificationLog> NotificationLogs { get; set; }
-
-        public string UserId { get; set; }
-        public User User { get; set; }
     }
 }

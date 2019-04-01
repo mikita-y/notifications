@@ -9,6 +9,5 @@ namespace DataAccessLayer.Models
     public class  User : IdentityUser
     {
         public List<Notification> Notifications { get; set; }
-        //public string CustomTag { get; set; }
     }
 }
