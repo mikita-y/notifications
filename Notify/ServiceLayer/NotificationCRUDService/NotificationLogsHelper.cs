@@ -47,7 +47,24 @@ namespace ServiceLayer.NotificationCRUDService
                 Changing += "Image update\n";
                 DatabaseNotification.Image = UserNotification.Image;
             }
-            if (DatabaseNotification.NotificationActions.SequenceEqual(UserNotification.NotificationActions))
+            //разработать как кнопки будут удаляться и добавляться в бд
+            if(DatabaseNotification.NotificationActions == null)
+            {
+                if (UserNotification.NotificationActions != null)
+                {
+                    Changing += "Action Add\n";
+                    DatabaseNotification.NotificationActions = UserNotification.NotificationActions;
+                }
+            }
+            else if(UserNotification.NotificationActions == null)
+            {
+                if (DatabaseNotification.NotificationActions != null)
+                {
+                    Changing += "Action delete\n";
+
+                }
+            }
+            else //(DatabaseNotification.NotificationActions.SequenceEqual(UserNotification.NotificationActions))
             { 
                 Changing += "Action update\n";
                 DatabaseNotification.NotificationActions = UserNotification.NotificationActions;

@@ -18,8 +18,10 @@ namespace ServiceLayer.NotificationCRUDService
 
         public void Create(NotificationDetailDTO Obj)
         {
-            context.Notifications.Add(Obj.GetNotification());
-            var log = NotificationLogsHelper.Creating(Obj.GetNotification());
+            var NewNotification = Obj.GetNotification();
+            context.Notifications.Add(NewNotification);
+
+            var log = NotificationLogsHelper.Creating(NewNotification);
 
             context.NotificationLogs.Add(log);
             context.SaveChanges();
@@ -27,7 +29,10 @@ namespace ServiceLayer.NotificationCRUDService
 
         public NotificationDetailDTO Read(int Id)
         {
-            return context.Notifications.Find(Id).GetNotificationDetailDTO();
+            var notification = context.Notifications.Find(Id);
+            if (notification == null)
+                throw new Exception("Notification not found");
+            return notification.GetNotificationDetailDTO();
         }
 
         public void Update(NotificationDetailDTO Obj)
@@ -36,13 +41,17 @@ namespace ServiceLayer.NotificationCRUDService
             var UserNotification = Obj.GetNotification();
             var log = NotificationLogsHelper.Comparing(ref DatabaseNotification, UserNotification);
             context.NotificationLogs.Add(log);
-            context.SaveChanges();
+            if(log.Change != "")
+                context.SaveChanges();
         }
 
         public void Delete(int Id)
         {
-            context.NotificationLogs.RemoveRange(context.NotificationLogs.Where(log => log.NotificationId == Id));
-            context.Notifications.Remove(context.Notifications.Find(Id));
+            //context.NotificationLogs.RemoveRange(context.NotificationLogs.Where(log => log.NotificationId == Id));
+            var notification = context.Notifications.Find(Id);
+            if (notification == null)
+                throw new Exception("Notification not found");
+            context.Notifications.Remove(notification);
             context.SaveChanges();
         }
     }
