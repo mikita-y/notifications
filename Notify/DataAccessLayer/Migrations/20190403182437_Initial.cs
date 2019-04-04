@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Data_Access_Layer.Migrations
+namespace DataAccessLayer.Migrations
 {
     public partial class Initial : Migration
     {
@@ -45,6 +45,24 @@ namespace Data_Access_Layer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LogEntries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Thread = table.Column<string>(maxLength: 255, nullable: true),
+                    Level = table.Column<string>(maxLength: 50, nullable: true),
+                    Logger = table.Column<string>(maxLength: 255, nullable: true),
+                    Message = table.Column<string>(maxLength: 4000, nullable: true),
+                    Exception = table.Column<string>(maxLength: 2000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogEntries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -163,21 +181,21 @@ namespace Data_Access_Layer.Migrations
                     Body = table.Column<string>(nullable: true, defaultValue: "Text"),
                     Icon = table.Column<string>(nullable: true),
                     Image = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notifications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Notifications_AspNetUsers_UserName",
-                        column: x => x.UserName,
+                        name: "FK_Notifications_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Actions",
+                name: "NotificationActions",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -189,9 +207,9 @@ namespace Data_Access_Layer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Actions", x => x.Id);
+                    table.PrimaryKey("PK_NotificationActions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Actions_Notifications_NotificationId",
+                        name: "FK_NotificationActions_Notifications_NotificationId",
                         column: x => x.NotificationId,
                         principalTable: "Notifications",
                         principalColumn: "Id",
@@ -199,7 +217,7 @@ namespace Data_Access_Layer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Logs",
+                name: "NotificationLogs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -210,19 +228,14 @@ namespace Data_Access_Layer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Logs", x => x.Id);
+                    table.PrimaryKey("PK_NotificationLogs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Logs_Notifications_NotificationId",
+                        name: "FK_NotificationLogs_Notifications_NotificationId",
                         column: x => x.NotificationId,
                         principalTable: "Notifications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Actions_NotificationId",
-                table: "Actions",
-                column: "NotificationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -264,21 +277,23 @@ namespace Data_Access_Layer.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Logs_NotificationId",
-                table: "Logs",
+                name: "IX_NotificationActions_NotificationId",
+                table: "NotificationActions",
                 column: "NotificationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notifications_UserName",
+                name: "IX_NotificationLogs_NotificationId",
+                table: "NotificationLogs",
+                column: "NotificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_UserId",
                 table: "Notifications",
-                column: "UserName");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Actions");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -295,7 +310,13 @@ namespace Data_Access_Layer.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Logs");
+                name: "LogEntries");
+
+            migrationBuilder.DropTable(
+                name: "NotificationActions");
+
+            migrationBuilder.DropTable(
+                name: "NotificationLogs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

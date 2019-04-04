@@ -11,14 +11,11 @@ namespace WEB.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(ValuesController));
-
 
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            log.Info("info");
             return new string[] { "value1", "value2" };
         }
 

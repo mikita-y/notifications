@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react';
 
+
+
 import NotificationService from '../../services/NotificationService';
 
 
@@ -13,7 +15,7 @@ import NotificationService from '../../services/NotificationService';
         Notifications: null
      };
 
-    constructor() {
+     constructor() {
         super();
         this.UpdateList();
     }
@@ -28,9 +30,21 @@ import NotificationService from '../../services/NotificationService';
                     Notifications: obj.notifications
                 });
             });
-    }
+     }
 
-     render() {
+
+     onNotiClick = (id) => {
+         //onToggleImportant = { () => onTo}
+         console.log('NotiClick', id);
+     };
+
+
+
+render() {
+
+    const { onToggleSelect } = this.props;
+
+
          if (!this.state.Notifications) {
              return null
          } else {
@@ -38,7 +52,17 @@ import NotificationService from '../../services/NotificationService';
                  <div>
 
                      {this.state.Notifications.map(item => (
-                         <div>{item.title}</div>))}
+                         <div>
+                             <span
+                                 onClick={this.onNotiClick(item.id)}>
+
+                                 <label>
+                                 {item.title}
+
+                                 </label>
+                             </span>
+
+                         </div>))}
                  </div>
              )
          }

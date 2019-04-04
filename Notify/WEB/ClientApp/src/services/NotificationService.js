@@ -23,4 +23,12 @@
     }
 
 
+
+    async getNotification(id) {
+        const Notification = await this.getResource(`/notificationcrud/${id}`);
+        return Notification;
+    }
+
+
+
 }

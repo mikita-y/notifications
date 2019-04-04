@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Data_Access_Layer.Migrations
+namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(NotifyContext))]
     partial class NotifyContextModelSnapshot : ModelSnapshot
@@ -32,19 +32,15 @@ namespace Data_Access_Layer.Migrations
                         .HasMaxLength(2000);
 
                     b.Property<string>("Level")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<string>("Logger")
-                        .IsRequired()
                         .HasMaxLength(255);
 
                     b.Property<string>("Message")
-                        .IsRequired()
                         .HasMaxLength(4000);
 
                     b.Property<string>("Thread")
-                        .IsRequired()
                         .HasMaxLength(255);
 
                     b.HasKey("Id");

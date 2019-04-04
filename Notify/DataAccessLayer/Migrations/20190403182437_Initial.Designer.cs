@@ -7,59 +7,47 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Data_Access_Layer.Migrations
+namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(NotifyContext))]
-    [Migration("20190311133151_Initial")]
+    [Migration("20190403182437_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DataAccessLayer.Models.Action", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.LogEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Answer");
-
-                    b.Property<string>("Icon");
-
-                    b.Property<int>("NotificationId");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NotificationId");
-
-                    b.ToTable("Actions");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Log", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Change");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
-                    b.Property<int>("NotificationId");
+                    b.Property<string>("Exception")
+                        .HasMaxLength(2000);
+
+                    b.Property<string>("Level")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Logger")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(4000);
+
+                    b.Property<string>("Thread")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NotificationId");
-
-                    b.ToTable("Logs");
+                    b.ToTable("LogEntries");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Notification", b =>
@@ -81,14 +69,55 @@ namespace Data_Access_Layer.Migrations
                         .HasMaxLength(20)
                         .HasDefaultValue("Notification");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("UserId")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserName");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.NotificationAction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Answer");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<int>("NotificationId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationId");
+
+                    b.ToTable("NotificationActions");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.NotificationLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Change");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("NotificationId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationId");
+
+                    b.ToTable("NotificationLogs");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.User", b =>
@@ -253,27 +282,27 @@ namespace Data_Access_Layer.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.Action", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Notification", "Notification")
-                        .WithMany("Actions")
-                        .HasForeignKey("NotificationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Log", b =>
-                {
-                    b.HasOne("DataAccessLayer.Models.Notification", "Notification")
-                        .WithMany("Logs")
-                        .HasForeignKey("NotificationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("DataAccessLayer.Models.Notification", b =>
                 {
                     b.HasOne("DataAccessLayer.Models.User", "User")
                         .WithMany("Notifications")
-                        .HasForeignKey("UserName")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.NotificationAction", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Notification", "Notification")
+                        .WithMany("NotificationActions")
+                        .HasForeignKey("NotificationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.NotificationLog", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Notification", "Notification")
+                        .WithMany("NotificationLogs")
+                        .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
