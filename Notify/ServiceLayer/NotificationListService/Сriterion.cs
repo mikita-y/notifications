@@ -9,11 +9,11 @@ namespace ServiceLayer.NotificationListService
 
     public class Criterion
     {
-        public string UserId { get; set; }
-        public Sorting Sorting { get; set; }
-        public FilterBy[] Filterby { get; set; }
+        public string userId { get; set; }
+        public Sorting? sorting { get; set; }
+        public FilterBy? Filterby { get; set; }
         public string SearchText { get; set; }
-        public int Page { get; set; }
-        public int PageSize { get; set; }
+        public int page { get; set; }
+        public int pageSize { get; set; }
     }
 }

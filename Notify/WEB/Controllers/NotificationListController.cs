@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DataAccessLayer.DbContext;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ServiceLayer.NotificationListService;
 using WEB.Logger;
@@ -13,38 +14,40 @@ using WEB.Logger;
 
 namespace WEB.Controllers
 {
+
     //[Authorize]
     [Route("api/[controller]")]
     public class NotificationListController : Controller
     {
-        ILogger logger;
+        ILogger _logger;
 
-        INotificationListService service;
+        INotificationListService _service;
 
-        public NotificationListController(NotifyContext context, ILoggerFactory loggerFactory)
+        public NotificationListController(ILoggerFactory loggerFactory, INotificationListService service)
         {
-            logger = loggerFactory.CreateLogger("DbLogger");
-            service = new NotificationListService(context);
+            _logger = loggerFactory.CreateLogger("DbLogger");
+            _service = service;
         }
 
         // Метод для теста
         [HttpGet]
         public IActionResult Get()
         {
-            Criterion I = new Criterion { UserId = "9e1d0156-27e1-41f4-9a2e-f727a1f898ce", Sorting = Sorting.AZ };
-            var obj = service.FilterSortingPaging(I);
-            logger.LogInformation("Work with logs");
+            Criterion I = new Criterion { userId = "9e1d0156-27e1-41f4-9a2e-f727a1f898ce", sorting = Sorting.AZ };
+            var obj = _service.FilterSortingPaging(I);
+            //logger.LogInformation("Не тот контроллер");
             return Ok(obj);
         }
 
 
         // POST api/notificationlist/
-        [HttpPost]
-        public IActionResult  Post([FromBody]Criterion I)
+        [HttpPost("[action]")]
+        public IActionResult PostList([FromBody] Criterion I)
         {
             //возвращает ObjectNotificationsDTO
-            var a = service.FilterSortingPaging(I);
-            return View(a.Notifications[0]);
+           var a = _service.FilterSortingPaging(I);
+           return Ok(a);
         }
+
     }
 }

@@ -22,8 +22,13 @@ namespace ServiceLayer.NotificationLogListService
             var logs = context.NotificationLogs.Where(log => log.NotificationId == criterion.NotificationId).GetNotificationLogDTO();
             if (criterion.PageSize == 0)
                 criterion.PageSize = 10;
+
+            int allPages = logs.Count() / criterion.PageSize;
+            if ((logs.Count() % criterion.PageSize) > 0)
+                allPages++;
+
             logs = logs.GetPageOfItems(criterion.Page, criterion.PageSize);
-            return new NotificationLogDTOList { LogList = logs.ToList(), Page = criterion.Page, PageSize = criterion.PageSize };
+            return new NotificationLogDTOList { LogList = logs.ToList(), PageNumber = criterion.Page, AllPages = allPages };
         }
 
     }

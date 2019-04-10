@@ -2,6 +2,7 @@
 using DataAccessLayer.Models;
 using ServiceLayer.NotificationLogListService;
 using System;
+using System.Linq;
 
 namespace Test
 {
@@ -11,12 +12,18 @@ namespace Test
         {
             using (var context = new NotifyContext())
             {
-                var service = new NotificationLogListService(context);
+                //var service = new NotificationLogListService(context);
 
-                var logList =service.GetNotificationLogsList(new LogCriterion {Page = 0, PageSize = 5, NotificationId = 20 });
+                //var logList =service.GetNotificationLogsList(new LogCriterion {Page = 0, PageSize = 5, NotificationId = 20 });
 
-                foreach (var log in logList.LogList)
-                    Console.WriteLine($"{log.Date}\n{log.Change}");
+               // foreach (var log in logList.LogList)
+                //    Console.WriteLine($"{log.Date}\n{log.Change}");
+
+
+
+               context.LogEntries.RemoveRange(context.LogEntries.Where(l => l.Level == "Information"));
+
+               context.SaveChanges();
 
 
                 /* CRUD Service

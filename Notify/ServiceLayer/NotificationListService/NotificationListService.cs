@@ -20,16 +20,18 @@ namespace ServiceLayer.NotificationListService
 
         public ObjectNotificationsDTO FilterSortingPaging(Criterion criterion)
         {
-            IQueryable<Notification> notifications = context.Notifications.Where(x => x.UserId == criterion.UserId);
+            IQueryable<Notification> notifications = context.Notifications.Where(x => x.UserId == criterion.userId);
 
-            notifications = context.Notifications.Where(x => x.UserId == criterion.UserId).SortingBy(criterion).Filter(criterion);
+            notifications = context.Notifications.Where(x => x.UserId == criterion.userId).SortingBy(criterion).Filter(criterion);
             
-            int allPages = notifications.Count();
-            if (criterion.PageSize == 0)
-                criterion.PageSize = 10;
-            var NotificationsDTOList = notifications.GetPageOfItems(criterion.Page, criterion.PageSize).GetNotificationDTO().ToList();
+            int allPages = notifications.Count() / criterion.pageSize;
+            if ((notifications.Count() % criterion.pageSize) > 0)
+                allPages++;
+            if (criterion.pageSize == 0)
+                criterion.pageSize = 10;
+            var NotificationsDTOList = notifications.GetPageOfItems(criterion.page - 1, criterion.pageSize).GetNotificationDTO().ToList();
 
-            return new ObjectNotificationsDTO { PageNumber = criterion.Page, AllPages = allPages, Notifications = NotificationsDTOList };
+            return new ObjectNotificationsDTO { PageNumber = criterion.page, AllPages = allPages, Notifications = NotificationsDTOList };
         }
 
     }

@@ -16,7 +16,9 @@ namespace ServiceLayer.NotificationListService
         public static IQueryable<Notification> SortingBy(this IQueryable<Notification> notifications, Criterion criterion)
         {
 
-            Sorting s = criterion.Sorting;
+            Sorting? s = criterion.sorting;
+            if (s == null)
+                s = Sorting.AZ;
             switch (s)
             {
                 case Sorting.AZ:
@@ -50,18 +52,20 @@ namespace ServiceLayer.NotificationListService
 
         public static IQueryable<Notification> Filter(this IQueryable<Notification> notifications, Criterion criterion)
         {
-            FilterBy[] filterby = criterion.Filterby;
+            FilterBy? filterby = criterion.Filterby;
             string searchtext = criterion.SearchText;
             if(filterby != null)
-                foreach (FilterBy f in filterby)
-                {
-                    switch (f)
+                //foreach (FilterBy f in filterby)
+                //{
+                    switch (filterby)
                     {
                         case FilterBy.Title:
-                            notifications = notifications.Where(n => n.Title.Contains(searchtext));
+                            if(searchtext!=null)
+                                notifications = notifications.Where(n => n.Title.Contains(searchtext));
                             break;
                         case FilterBy.Body:
-                            notifications = notifications.Where(n => n.Body.Contains(searchtext));
+                            if (searchtext != null)
+                                notifications = notifications.Where(n => n.Body.Contains(searchtext));
                             break;
                         case FilterBy.Picture:
                             notifications = notifications.Where(n => n.Icon != null);
@@ -71,7 +75,7 @@ namespace ServiceLayer.NotificationListService
                             break;
                         default: throw new Exception("Exception in NotificationServise.Filter");
                     }
-                }
+                //}
             return notifications;
         }
         

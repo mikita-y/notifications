@@ -63,8 +63,8 @@ namespace WEB.Controllers
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySuperSecurekey"));
 
             var token = new JwtSecurityToken(
-                issuer: "http://localhost:44301",
-                audience: "http://localhost:44301",
+                issuer: "http://localhost:44391",
+                audience: "http://localhost:44391",
                 expires: DateTime.UtcNow.AddHours(1),
                 claims: claims,
                 signingCredentials: new Microsoft.IdentityModel.Tokens.SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)

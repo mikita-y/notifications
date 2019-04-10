@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WEB.Logger
 {
     
-    public static class FileLoggerExtensions
+    public static class DbLoggerExtensions
     {
         public static ILoggerFactory AddDbLogger(this ILoggerFactory factory)
         {

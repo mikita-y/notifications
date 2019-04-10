@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using ServiceLayer.NotificationCRUDService;
+using ServiceLayer.NotificationListService;
 using System.IO;
 using System.Text;
 using WEB.Logger;
@@ -58,11 +60,15 @@ namespace WEB
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = "http://localhost:44301",
-                    ValidIssuer = "http://localhost:44301",
+                    ValidAudience = Configuration.GetSection("Paths:Host").Value,
+                    ValidIssuer = "http://localhost:44391",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySuperSecurekey"))
                 };
             });
+
+            services.AddScoped<INotificationListService, NotificationListService>();
+            services.AddScoped<INotificationCRUDService, NotificationCRUDService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,11 +87,12 @@ namespace WEB
 
 
             loggerFactory.AddDbLogger();
-            //var logger = loggerFactory.CreateLogger("DbLogger");
+            var logger = loggerFactory.CreateLogger("DbLogger");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

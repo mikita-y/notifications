@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAccessLayer.DbContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.NotificationCRUDService;
@@ -11,31 +10,25 @@ namespace WEB.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NotificationCRUDController : ControllerBase
+    public class NotificationCRUDController : Controller
     {
 
-        INotificationCRUDService service;
+        INotificationCRUDService _service;
 
-        public NotificationCRUDController(NotifyContext context)
+        public NotificationCRUDController(INotificationCRUDService servise)
         {
-            service = new NotificationCRUDService(context);
+            _service = servise;
         }
 
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok();
-        }
 
         // GET api/notificationcrud/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var notification = service.Read(id);
+            var notification = _service.Read(id);
             if (notification == null)
                 return NotFound();
-            return new ObjectResult(notification);
+            return Ok(notification);
         }
 
         // POST api/users
@@ -47,7 +40,7 @@ namespace WEB.Controllers
                 return BadRequest();
             }
 
-            service.Create(obj);
+            _service.Create(obj);
             return Ok(obj);
         }
 
@@ -60,7 +53,7 @@ namespace WEB.Controllers
                 return BadRequest();
             }
 
-            service.Update(obj);
+            _service.Update(obj);
             return Ok(obj);
         }
 
@@ -68,7 +61,7 @@ namespace WEB.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            service.Delete(id);
+            _service.Delete(id);
             return Ok();
         }
     }

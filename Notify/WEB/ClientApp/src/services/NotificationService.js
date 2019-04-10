@@ -1,32 +1,46 @@
-﻿export default class NotificationService {
+﻿
+
+export default class NotificationService {
 
     _apiBase = 'https://localhost:44391/api';
 
-    async getResource(url) {
-        const res = await fetch(`${this._apiBase}${url}`)
+    async getNotificationList(sort)
+    {
+        const body = {
+            userId: `9e1d0156-27e1-41f4-9a2e-f727a1f898ce`,
+            sorting: sort.sorting,
+            filterBy: sort.filterby ,
+            page: sort.page,
+            pageSize: sort.pageSize,
+            searchText: sort.searchText
+        }
+
+        const res = fetch('api/notificationlist/postlist', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        })
             .then((result) => {
                 return result.json();
             })
             .then((body) => {
-                console.log(body);
                 return body;
             });
-
-        //if (!res.ok) {
-        //    throw new Error(`Could not fetch ${url}` + `, received ${res.status}`)
-       // }
         return await res;
     }
 
-    getNotificationList() {
-        return this.getResource(`/notificationlist/`);
-    }
-
-
+   
 
     async getNotification(id) {
-        const Notification = await this.getResource(`/notificationcrud/${id}`);
-        return Notification;
+        const notification = fetch(`api/notificationcrud/${id}`)
+        .then((result) => {
+            return result.json();
+        })
+            .then((body) => {
+                //console.log('getNotification', body);
+            return body;
+        });
+    return await notification;
     }
 
 

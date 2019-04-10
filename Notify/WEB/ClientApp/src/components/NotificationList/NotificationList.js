@@ -1,7 +1,5 @@
 ﻿import React, { Component } from 'react';
 
-
-
 import NotificationService from '../../services/NotificationService';
 
 
@@ -9,62 +7,49 @@ import NotificationService from '../../services/NotificationService';
 
     notificationService = new NotificationService();
 
-    state = {
+     state = {
         PageNumber: null,
         AllPages: null,
         Notifications: null
      };
 
-     constructor() {
-        super();
-        this.UpdateList();
+     constructor(props) {
+         super(props);
     }
 
-    UpdateList() {
-        this.notificationService
-            .getNotificationList()
-            .then((obj) => {
-                this.setState({
-                    PageNumber: obj.pageNumber,
-                    AllPages: obj.allPages,
-                    Notifications: obj.notifications
-                });
-            });
+
+     UpdateList = (sort) => {
+         return this.notificationService
+             .getNotificationList(sort)
+             .then((obj) => {
+                 this.setState({
+                     PageNumber: obj.pageNumber,
+                     AllPages: obj.allPages,
+                     Notifications: obj.notifications
+                 });
+             });
      }
+     render() {
 
-
-     onNotiClick = (id) => {
-         //onToggleImportant = { () => onTo}
-         console.log('NotiClick', id);
-     };
-
-
-
-render() {
-
-    const { onToggleSelect } = this.props;
-
+         const { sort } = this.props;
+         this.UpdateList(sort);
 
          if (!this.state.Notifications) {
              return null
-         } else {
+         }
+         else {
              return (
                  <div>
-
                      {this.state.Notifications.map(item => (
-                         <div>
-                             <span
-                                 onClick={this.onNotiClick(item.id)}>
-
-                                 <label>
+                         <div key={item.id}>
+                             <button
+                                 onClick={() => this.props.onToggleNotification(item.id)}>
                                  {item.title}
-
-                                 </label>
-                             </span>
-
+                             </button>
                          </div>))}
                  </div>
              )
          }
      }
-}
+
+ }
