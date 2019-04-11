@@ -5,19 +5,20 @@ export default class FilterBy extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { filterBy: null };
+        this.state = {
+            option: {
+                value: null,
+                label: 'No'
+            }
+        };
     }
-    updateState(element) {
-        this.setState({ value: element.value });
+
+    updateFilter = (element) => {
+        this.setState({ option: element });
+        this.props.updateFilterby(element.value);
     }
+
     render() {
-
-        const { updateFilterby } = this.props;
-
-        const updateState = (element) => {
-            this.setState({ value: element.value });
-            updateFilterby(element.value);
-        }
 
         var options = [
             { value: null, label: 'No' },
@@ -29,9 +30,9 @@ export default class FilterBy extends Component {
         return (
             <Select
                 name="form-field-name"
-                value={this.state.value}
+                value={this.state.option}
                 options={options}
-                onChange={updateState.bind(this)}
+                onChange={this.updateFilter.bind(this)}
             />
         );
     }

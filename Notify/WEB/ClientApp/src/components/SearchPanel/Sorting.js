@@ -7,16 +7,21 @@ export default class Sorting extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { sorting: 0 };
+        this.state = {
+            option: {
+                value: 0,
+                label: 'A-Z'
+            }
+        };
     }
 
-    render() {
-        const { updateSorting } = this.props;
+    updateState = (element) => {
+        this.setState({ option: element });
+        this.props.updateSorting(element.value);
+    }
 
-        const updateState = (element) => {
-            this.setState({ value: element.value });
-            updateSorting(element.value);
-        }
+
+    render() {
 
         var options = [
             { value: 0, label: 'A-Z' },
@@ -27,9 +32,9 @@ export default class Sorting extends Component {
         return (
             <Select
                 name="form-field-name"
-                value={this.state.value}
+                value={this.state.option}
                 options={options}
-                onChange={updateState.bind(this)}
+                onChange={this.updateState.bind(this)}
             />
         );
     }
