@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
 
-import Sorting from '../SearchPanel/Sorting';
-import FilterBy from '../SearchPanel/FilterBy';
-import Paging from '../SearchPanel/Paging';
-import SearchText from '../SearchPanel/SearchText';
+import Sorting from './Sorting';
+import FilterBy from './FilterBy';
+import Paging from './Paging';
+import SearchText from './SearchText';
 
 
 
@@ -14,8 +14,6 @@ import SearchText from '../SearchPanel/SearchText';
      }
 
      render() {
-        const { updateSorting, updateFilterby, updatePageSize, updateSearchText } = this.props;
-
         return (
             <div>
 
@@ -31,16 +29,16 @@ import SearchText from '../SearchPanel/SearchText';
                     <tbody>
                     <tr>
                             <td> <Sorting
-                                updateSorting={updateSorting}
+                                updateSorting={this.props.updateSorting}
                             /> </td>
                             <td> <FilterBy
-                                updateFilterby={updateFilterby}
+                                updateFilterby={this.props.updateFilterby}
                             /> </td>
                             <td> <SearchText
-                                updateSearchText={updateSearchText}
+                                updateSearchText={this.props.updateSearchText}
                             /> </td>
                             <td> <Paging
-                                updatePageSize={updatePageSize}
+                                updatePageSize={this.props.updatePageSize}
                             /> </td>
                     </tr>
                     </tbody>

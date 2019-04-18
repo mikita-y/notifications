@@ -1,66 +1,59 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 
-import SearchPanel from '../SearchPanel/SearchPanel';
-import NotificationList from '../NotificationList/NotificationList';
-import Notification from '../Notification/Notification';
+import SearchPanel from './SearchPanel/SearchPanel'
+import NotificationList from './NotificationList/NotificationList'
+import Notification from './Notification/Notification'
+import { getNotificationList } from '../../actions/notificationList'
 
-export default class NotificationListPage extends Component {
+
+class NotificationListPage extends Component {
 
     state = {
-        sort: {
-            sorting: 0,
-            filterby: null,
-            searchText: null,
-            page: 1,
-            pageSize: 10
-        },
-        notificationId : null
+        userId: localStorage.getItem("userId"),
+        sorting: 0,
+        filterBy: null,
+        page: 1,
+        pageSize: 10,
+        searchText: null
+    }
+
+    componentDidMount() {
+        this.props.sortingNotificationList(this.state);
+    }
+
+    componentDidUpdate() {
+        this.props.sortingNotificationList(this.state);
     }
 
     updateSorting = (newsorting) => {
 
-        let newsort = this.state.sort;
+        let newsort = this.state;
         newsort.sorting = newsorting;
-        this.setState({
-            sort: newsort
-        })
+        this.setState({ newsort });
     }
 
     updateFilterby = (newfilterby) => {
 
-        let newsort = this.state.sort;
-        newsort.filterby = newfilterby;
-        this.setState({
-            sort: newsort
-        })
+        let newsort = this.state;
+        newsort.filterBy = newfilterby;
+        this.setState({ newsort });
     }
 
     updatePageSize = (newpageSize) => {
 
-        let newsort = this.state.sort;
+        let newsort = this.state;
         newsort.pageSize = newpageSize;
-        this.setState({
-            sort: newsort
-        })
+        this.setState({ newsort });
     }
 
     updateSearchText = (newsearchText) => {
 
-        let newsort = this.state.sort;
+        let newsort = this.state;
         newsort.searchText = newsearchText;
-        this.setState({
-            sort: newsort
-        })
+        this.setState({ newsort });
     }
-
-
-    onToggleNotification = (newnotificationId) => {
-        this.setState({
-            notificationId: newnotificationId
-        })
-    }
-
 
     render() {
         return (
@@ -71,17 +64,21 @@ export default class NotificationListPage extends Component {
                     updatePageSize={this.updatePageSize}
                     updateSearchText={this.updateSearchText}
                 />
-                <NotificationList
-                    sort={this.state.sort}
-                onToggleNotification={this.onToggleNotification}
-                />
-
+                <NotificationList />
                 <Notification
-                    id={this.state.notificationId}
+                    sort={this.state}
                 />
-
             </div>
         )
     }
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        sortingNotificationList: (sort) => dispatch(getNotificationList(sort))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(NotificationListPage)
 

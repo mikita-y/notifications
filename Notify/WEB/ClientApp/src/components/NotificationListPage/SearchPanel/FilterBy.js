@@ -30,7 +30,7 @@ export default class FilterBy extends Component {
         return (
             <Select
                 name="form-field-name"
-                value={this.state.option}
+                value={this.state.option || ''}
                 options={options}
                 onChange={this.updateFilter.bind(this)}
             />

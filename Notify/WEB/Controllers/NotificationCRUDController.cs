@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.NotificationCRUDService;
 
 namespace WEB.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class NotificationCRUDController : Controller
@@ -31,9 +29,9 @@ namespace WEB.Controllers
             return Ok(notification);
         }
 
-        // POST api/users
-        [HttpPost]
-        public IActionResult Post([FromBody]NotificationDetailDTO obj)
+        // POST api/notificationcrud
+        [HttpPost("[action]")]
+        public IActionResult Create([FromBody]NotificationDetailDTO obj)
         {
             if (obj == null)
             {
@@ -44,7 +42,7 @@ namespace WEB.Controllers
             return Ok(obj);
         }
 
-        // PUT api/users/
+        // PUT api/notificationcrud/
         [HttpPut]
         public IActionResult Put([FromBody]NotificationDetailDTO obj)
         {
@@ -57,7 +55,7 @@ namespace WEB.Controllers
             return Ok(obj);
         }
 
-        // DELETE api/users/5
+        // DELETE api/notificationcrud/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

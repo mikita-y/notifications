@@ -22,15 +22,15 @@ namespace ServiceLayer.NotificationCRUDService
                 Icon = item.Icon,
                 Image = item.Image,
                 NotificationActions =  actions,
-                NotificationLogs = logs,
-                UserId = item.UserId
+                //NotificationLogs = logs,
+                //UserId = item.UserId
             };
             
         }
 
         public static Notification GetNotification(this NotificationDetailDTO item)
         {           
-            return new Notification { Title = item.Title, Body = item.Body, Icon = item.Icon, Image = item.Image, NotificationActions = item.NotificationActions, UserId = item.UserId };
+            return new Notification { Title = item.Title, Body = item.Body, Icon = item.Icon, Image = item.Image, NotificationActions = item.NotificationActions, /*UserId = item.UserId*/ };
         }
 
     }

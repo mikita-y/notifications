@@ -19,7 +19,6 @@ export default class Paging extends Component {
     }
 
     render() {
-
         var options = [
             { value: 10, label: 10 },
             { value: 15, label: 15 },

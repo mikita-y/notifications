@@ -60,9 +60,9 @@ namespace WEB
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = Configuration.GetSection("Paths:Host").Value,
-                    ValidIssuer = "http://localhost:44391",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySuperSecurekey"))
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
 
@@ -71,7 +71,6 @@ namespace WEB
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
@@ -81,13 +80,12 @@ namespace WEB
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
 
             loggerFactory.AddDbLogger();
-            var logger = loggerFactory.CreateLogger("DbLogger");
+            var logger = loggerFactory.CreateLogger(Configuration["Logger"]);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

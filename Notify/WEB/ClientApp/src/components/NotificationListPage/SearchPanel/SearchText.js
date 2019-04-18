@@ -19,7 +19,7 @@ export default class Paging extends Component {
         return (
             <input type="text"
                 placeholder="search"
-                value={this.state.searchText}
+                value={this.state.searchText ? this.state.searchText : ''}
                 onChange={this.onSearchChange}
             />
         );

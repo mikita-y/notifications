@@ -20,9 +20,7 @@ export default class Sorting extends Component {
         this.props.updateSorting(element.value);
     }
 
-
     render() {
-
         var options = [
             { value: 0, label: 'A-Z' },
             { value: 1, label: 'Z-A' },
