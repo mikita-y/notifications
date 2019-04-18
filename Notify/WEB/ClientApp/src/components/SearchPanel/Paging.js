@@ -5,18 +5,20 @@ export default class Paging extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { paging: 10 };
+        this.state = {
+            option: {
+                value: 10,
+                label: 10
+            }
+        };
     }
-    updateState(element) {
-        this.setState({ value: element.value });
-    }
-    render() {
-        const { updatePageSize } = this.props;
 
-        const updateState = (element) => {
-            this.setState({ value: element.value });
-            updatePageSize(element.value);
-        }
+    updatePaging = (element) => {
+        this.setState({ option: element });
+        this.props.updatePageSize(element.value);
+    }
+
+    render() {
 
         var options = [
             { value: 10, label: 10 },
@@ -26,9 +28,9 @@ export default class Paging extends Component {
         return (
             <Select
                 name="form-field-name"
-                value={this.state.value}
+                value={this.state.option}
                 options={options}
-                onChange={updateState}
+                onChange={this.updatePaging.bind(this)}
             />
         );
     }
