@@ -1,15 +1,36 @@
-﻿import {
-    REQUEST_ERROR, REQUEST_LOADING, REQUEST_SECCESSFUL,
-    requestError, requestLoading, requestSeccessful
-} from './request'
+﻿import { combineReducers } from 'redux';
 
 
-export const SET_NOTIFICATION = "SET_NOTIFICATION"
+export const GET_NOTIFICATION_SUCCESS = "GET_NOTIFICATION_SUCCESS"
+export const GET_NOTIFICATION_ERROR = "GET_NOTIFICATION_ERROR"
+export const GET_NOTIFICATION_LOADING = "GET_NOTIFICATION_LOADING"
+//export const DELETE_NOTIFICATION_SUCCESS = "DELETE_NOTIFICATION_SUCCESS"
+export const DELETE_NOTIFICATION_ERROR = "DELETE_NOTIFICATION_ERROR"
+export const DELETE_NOTIFICATION_LOADING = "DELETE_NOTIFICATION_LOADING"
 
-export const setNotification = (notification) => {
+
+/////random
+
+
+
+
+export const getNotificationSuccess = (payload) => {
     return {
-        type: SET_NOTIFICATION,
-        item: notification
+        type: GET_NOTIFICATION_SUCCESS,
+        payload
+    }
+}
+
+export const getNotificationError = (payload) => {
+    return {
+        type: GET_NOTIFICATION_ERROR,
+        payload
+    }
+}
+
+export const getNotificationLoading = () => {
+    return {
+        type: GET_NOTIFICATION_LOADING
     }
 }
 
@@ -17,7 +38,7 @@ export const setNotification = (notification) => {
 //// thunk action
 export const getNotification = (id) => {
     return (dispatch) => {
-        dispatch(requestLoading(true));
+        dispatch(getNotificationLoading());
 
         fetch(`api/notificationcrud/${id}`, {
             headers: {
@@ -26,19 +47,59 @@ export const getNotification = (id) => {
         })
             .then((response) => {
 
-                dispatch(requestLoading(false));
+                dispatch(getNotificationLoading());
                 return response.json();
             })
             .then((result) => {
-                dispatch(setNotification(result));
+                console.log( "noti ", result);
+                dispatch(getNotificationSuccess(result));
             })
-            .catch(() => dispatch(requestError(true)));
+            .catch(() => dispatch(getNotificationError("err")));
+    }
+}
+
+
+const initialActiveNotification = {
+    notification: null,
+    error: false,
+    errorMesage: null,
+    loading: false
+}
+
+
+export const activeNotification = (state = initialActiveNotification, action) => {
+    switch (action.type) {
+        case GET_NOTIFICATION_SUCCESS:
+            return { ...state,  notification: action.payload }
+        case GET_NOTIFICATION_ERROR:
+            return { ...state, error: true, errorMessage: action.payload }
+        case GET_NOTIFICATION_LOADING:
+            return { ...state, loading: !state.loading }
+        default:
+            return state
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////delete/////////////////////
+
+
+
+export const deleteNotificationError = (payload) => {
+    return {
+        type: DELETE_NOTIFICATION_ERROR,
+        payload
+    }
+}
+
+export const deleteNotificationLoading = () => {
+    return {
+        type: DELETE_NOTIFICATION_LOADING
     }
 }
 
 export const deleteNotification = (id) => {
     return (dispatch) => {
-        dispatch(requestLoading(true));
+        dispatch(deleteNotificationLoading());
 
         fetch(`api/notificationcrud/${id}`, {
             method: 'delete',
@@ -48,47 +109,38 @@ export const deleteNotification = (id) => {
         })
             .then((response) => {
                 console.log(response);
-                dispatch(requestLoading(false));
+                dispatch(deleteNotificationLoading());
             })
             .then(() => {
-                const item = {
-                    id: 'delete',
-                    title: 'deleted'
-                }
-                dispatch(setNotification(item));
+                dispatch(getNotificationSuccess(null));
             })
-            .catch(() => { console.log('error in notification'); dispatch(requestError(true)) });
+            .catch(() => { console.log('error in notification'); dispatch(deleteNotificationError("mess")) });
     }
 }
 
-
-//reducer
-
-
-const initialNotification = {
+const initialDeletedNotification = {
     error: false,
-    load: false,
-    /// заменить на notification: null   ????
-    notification: {
-        id: null,
-        title: null,
-        body: null,
-        icon: null,
-        image: null,
-        notificationActions: null
-    }
+    errorMesage: null,
+    loading: false
 }
 
-
-export const activeNotification = (state = initialNotification, action) => {
+export const deletedNotification = (state = initialDeletedNotification, action) => {
     switch (action.type) {
-        case SET_NOTIFICATION:
-            return Object.assign({}, state, { notification: action.item })
-        case REQUEST_ERROR:
-            return Object.assign({}, state, { error: action.error })
-        case REQUEST_LOADING:
-            return Object.assign({}, state, { load: action.load })
+        case DELETE_NOTIFICATION_ERROR:
+            return { ...state, error: true, errorMessage: action.payload }
+        case DELETE_NOTIFICATION_LOADING:
+            return { ...state, loading: !state.loading }
         default:
             return state
     }
 }
+
+
+
+
+//final reducer 
+
+export const notification = combineReducers({
+    activeNotification,
+    deletedNotification
+})

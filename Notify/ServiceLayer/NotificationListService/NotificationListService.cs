@@ -23,7 +23,7 @@ namespace ServiceLayer.NotificationListService
             IQueryable<Notification> notifications = context.Notifications.Where(x => x.UserId == criterion.userId);
 
             notifications = context.Notifications.Where(x => x.UserId == criterion.userId).SortingBy(criterion).Filter(criterion);
-            
+
             int allPages = notifications.Count() / criterion.pageSize;
             if ((notifications.Count() % criterion.pageSize) > 0)
                 allPages++;

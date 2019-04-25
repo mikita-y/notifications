@@ -1,29 +1,84 @@
-﻿import {
-    REQUEST_ERROR, REQUEST_LOADING, REQUEST_SECCESSFUL,
-    requestError, requestLoading, requestSeccessful
-} from './request'
-
-
+﻿
 export const SET_NOTIFICATION_LIST = 'SET_NOTIFICATION_LIST'
+export const NOTIFICATION_LIST_ERROR = 'NOTIFICATION_LIST_ERROR'
+export const NOTIFICATION_LIST_LOADING = 'NOTIFICATION_LIST_LOADING'
 
-export const setNotificationList = (list) => {
+export const SORT_NOTIFICATIONS = 'SORT_NOTIFICATIONS'
+export const FILTER_NOTIFICATIONS = 'FILTER_NOTIFICATIONS'
+export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
+export const SET_PAGE_NUMBER = 'SET_PAGE_NUMBER'
+export const SET_PAGE_SIZE = 'SET_PAGE_SIZE'
+
+
+export const setNotificationList = (payload) => {
     return {
         type: SET_NOTIFICATION_LIST,
-        item: list
+        payload
     }
 }
 
+export const notificationListError = (payload) => {
+    return {
+        type: NOTIFICATION_LIST_ERROR,
+        payload
+    }
+}
+
+export const notificationListLoading = () => {
+    return {
+        type: NOTIFICATION_LIST_LOADING,
+    }
+}
+/////////////////////////
+
+export const sortNotifications = (payload) => {
+    return {
+        type: SORT_NOTIFICATIONS,
+        payload
+    }
+}
+
+export const filterNotifications = (payload) => {
+    return {
+        type: FILTER_NOTIFICATIONS,
+        payload
+    }
+}
+
+export const setSearchText = (payload) => {
+    return {
+        type: SET_SEARCH_TEXT,
+        payload
+    }
+}
+
+export const setPageNumber = (payload) => {
+    return {
+        type: SET_PAGE_NUMBER,
+        payload
+    }
+}
+
+export const setPageSize = (payload) => {
+    return {
+        type: SET_PAGE_SIZE,
+        payload
+    }
+}
+
+
 //// thunk action
-export const getNotificationList = (sort) => {
-    return (dispatch) => {
-        dispatch(requestLoading(true));
+export const getNotificationList = () => {
+    return (dispatch, getState) => {
+        const prop = getState().notificationList;
+        dispatch(notificationListLoading());
         const body = {
-            userId: sort.userId,
-            sorting: sort.sorting,
-            filterBy: sort.filterBy,
-            page: sort.page,
-            pageSize: sort.pageSize,
-            searchText: sort.searchText
+            userId: getState().authentication.user.userId,
+            sorting: prop.sorting,
+            filterBy: prop.filtering,
+            page: prop.page,
+            pageSize: prop.pageSize,
+            searchText: prop.searchText
         }
 
         fetch('api/notificationlist/getnotificationlist', {
@@ -36,25 +91,32 @@ export const getNotificationList = (sort) => {
         })
             .then((response) => {
 
-                dispatch(requestLoading(false));
+                dispatch(notificationListLoading());
                 return response.json();
             })
             .then((result) => {
+                console.log("getList ", result);
                 dispatch(setNotificationList(result));
             })
-            .catch(() => { console.log('error in list'); dispatch(requestError(true)) });
+            .catch(() => { console.log('error in list'); dispatch(notificationListError("хуйня в лист")) });
     }
 }
 
 
 const initialNotificationList = {
     error: false,
-    load: false,
+    errorMessage: null,
+    loading: false,
     list: {
         pageNumber: null,
         allPages: null,
         notifications: null
-    }
+    },
+    sorting: 0,
+    filtering: null,
+    searchText: null,
+    page: 1,
+    pageSize: 10
 }
 
 
@@ -62,12 +124,24 @@ const initialNotificationList = {
 export const notificationList = (state = initialNotificationList, action) => {
     switch (action.type) {
         case SET_NOTIFICATION_LIST:
-            return Object.assign({}, state, { list: action.item })
-        case REQUEST_ERROR:
-            return Object.assign({}, state, { error: action.error })
-        case REQUEST_LOADING:
-            return Object.assign({}, state, { load: action.load })
+            return Object.assign({}, state, { list: action.payload })
+        case NOTIFICATION_LIST_LOADING:
+            return { ...state, loading: !state.loading }
+        case NOTIFICATION_LIST_ERROR:
+            return { ...state, error: true, errorMessage: action.payload }
+        case SORT_NOTIFICATIONS:
+            return { ...state, sorting: action.payload }
+        case FILTER_NOTIFICATIONS:
+            return { ...state, filtering: action.payload }
+        case SET_SEARCH_TEXT:
+            return { ...state, searchText: action.payload }
+        case SET_PAGE_NUMBER:
+            return { ...state, page: action.payload }
+        case SET_PAGE_SIZE:
+            return { ...state, pageSize: action.payload }
         default:
             return state
     }
 }
+
+

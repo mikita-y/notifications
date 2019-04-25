@@ -1,59 +1,60 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import './App.css'
 
 import AppHeader from '../AppHeader/AppHeader';
-import LogReg from '../Authentication/LogReg';
-import AppInfo from '../AppInfo/AppInfo';
-import Interface from '../Interface/Interface'
-import Logout from '../Authentication/Logout';
+import UserMenu from '../UserMenu/UserMenu'
+import About from '../AppInfo/About';
+import Contacts from '../AppInfo/Contacts';
+import Login from '../Authentication/LoginForm';
+import Registry from '../Authentication/RegistryForm';
 
-import { setToken } from '../../actions/authentication'
 
+import { authenticationSetUser } from '../../actions/authentication'
 
 
 class App extends Component {
 
     componentDidMount() {
-        if (localStorage.getItem("accessToken"))
-            this.props.setToken(true);
+        if (localStorage.getItem("accessToken")) {
+            const user = {
+                token: localStorage.getItem("accessToken"),
+                userId: localStorage.getItem("userId"),
+                userName: localStorage.getItem("userName")
+            };
+            if(!this.props.login)
+                this.props.authenticate(user);
+        }
     }
 
     render() {
-        if (!this.props.login)
-            return (
-                <div>
+        return (
+            <Router>
+                <div className="app-conteiner">
                     <AppHeader />
-                    <LogReg />
-                    <AppInfo />
+                    <Switch>
+                        <Route exact path="/" component={About} />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/registry" component={Registry} />
+                        <Route exact path="/contacts" component={Contacts} />
+                        <Route exact path={`/${this.props.login ? this.props.login.userName : ""}`} component={UserMenu} />
+                    </Switch>
                 </div>
+            </Router>
             )
-        else
-            return (
-                <div>
-                    <AppHeader />
-                    <Logout />
-                    <Interface />
-                </div>
-                )
     }
 }
 
 const mapStateToProps = state => ({
-    login: state.authentication.login,
-    //initstate: state
+    login: state.authentication.user,
+    initstate: state
 })
 
 const mapDispatchToProps = dispatch => {
     return {
-        setToken: (bool) => dispatch(setToken(bool))
+        authenticate: (user) => dispatch(authenticationSetUser(user))
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
-
-
-
-/*<button
-onClick = {() => console.log('show ', this.props.initstate)}>
-    SHOWSTORE
-</button>*/

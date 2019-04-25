@@ -5,7 +5,6 @@ using ServiceLayer.NotificationCRUDService;
 
 namespace WEB.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class NotificationCRUDController : Controller
@@ -18,8 +17,8 @@ namespace WEB.Controllers
             _service = servise;
         }
 
-
         // GET api/notificationcrud/5
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -30,6 +29,7 @@ namespace WEB.Controllers
         }
 
         // POST api/notificationcrud
+        [Authorize]
         [HttpPost("[action]")]
         public IActionResult Create([FromBody]NotificationDetailDTO obj)
         {
@@ -43,6 +43,7 @@ namespace WEB.Controllers
         }
 
         // PUT api/notificationcrud/
+        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody]NotificationDetailDTO obj)
         {
@@ -56,11 +57,22 @@ namespace WEB.Controllers
         }
 
         // DELETE api/notificationcrud/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _service.Delete(id);
             return Ok();
         }
+
+        [HttpGet("[action]")]
+        public IActionResult GetRandomNotification()
+        {
+            var notification = _service.GetRandomNotification();
+            if (notification == null)
+                return NotFound();
+            return Ok(notification);
+        }
+
     }
 }

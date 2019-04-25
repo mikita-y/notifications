@@ -34,12 +34,25 @@ namespace WEB.Controllers
         public async Task<IActionResult> Login([FromBody]LoginModel model)
         {
             var user = await userManager.FindByNameAsync(model.userName);
+            var checkPassword = await userManager.CheckPasswordAsync(user, model.password);
 
-            if(user != null && await userManager.CheckPasswordAsync(user, model.password))
+            if (user != null && await userManager.CheckPasswordAsync(user, model.password))
             {
                 return Token(user);
             }
-            return Unauthorized();
+
+            if (user == null)
+            {
+                return Unauthorized(new ErrorModel { Details = "Name not found" });
+            }
+            if (!await userManager.CheckPasswordAsync(user, model.password))
+            {
+                return Unauthorized(new ErrorModel { Details = "Password is bad" });
+            }
+            /// 500
+            /// 400
+            /// 200 результат
+            return Unauthorized(new ErrorModel{ Details = "flop"});
         }
 
         [HttpPost]
@@ -53,7 +66,7 @@ namespace WEB.Controllers
             {
                 return Token(user);
             }
-            return Unauthorized();
+            return Unauthorized("все хуево");
         }
 
         private IActionResult Token(User user)

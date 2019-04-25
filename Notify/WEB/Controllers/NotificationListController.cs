@@ -22,7 +22,6 @@ namespace WEB.Controllers
         }
 
         // POST api/notificationlist/
-        //[Authorize]
         [HttpPost("[action]")]
         public IActionResult GetNotificationList([FromBody] Criterion I)
         {

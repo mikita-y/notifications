@@ -29,12 +29,12 @@ namespace ServiceLayer.NotificationCRUDService
             };
             if (DatabaseNotification.Title != UserNotification.Title)
             {
-                Changing += "Title update\n";
+                Changing += $"Title update:\nOld title: {DatabaseNotification.Title}, new title: {UserNotification.Title}.\n";
                 DatabaseNotification.Title = UserNotification.Title;
             }
             if (DatabaseNotification.Body != UserNotification.Body)
             {
-                Changing += "Body update\n";
+                Changing += $"Body update\nOld body: {DatabaseNotification.Body}, new body: {UserNotification.Body}.\n";
                 DatabaseNotification.Body = UserNotification.Body;
             }
             if (DatabaseNotification.Icon != UserNotification.Icon)

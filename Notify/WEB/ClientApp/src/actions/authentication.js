@@ -1,65 +1,106 @@
-﻿import {
-    REQUEST_ERROR, REQUEST_LOADING, 
-    requestError, requestLoading
-} from './request'
+﻿import axios from 'axios'
 
-
-/////constants
-export const SET_TOKEN = 'SET_TOKEN'
-export const DELETE_TOKEN = 'DELETE_TOKEN'
-export const SET_USERID = 'SET_USERID'
-
+export const AUTHENTICATION_DELETE_USER = 'DELETE_USER'
+export const AUTHENTICATION_SET_USER = 'SET_USER'
+export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
+export const AUTHENTICATION_LOADING = 'AUTHENTIFICATION_LOADING'
 
 
 /////actions
-export const setToken = () => {
+
+export const authenticationError = (payload) => {
     return {
-        type: SET_TOKEN,
+        type: AUTHENTICATION_ERROR,
+        payload
     }
 }
 
-export const deleteToken = () => {
+export const authenticationLoading = () => {
     return {
-        type: DELETE_TOKEN
+        type: AUTHENTICATION_LOADING
     }
 }
 
+
+export const authenticationSetUser = (payload) => {
+    return {
+        type: AUTHENTICATION_SET_USER,
+        payload
+    }
+}
+
+export const authenticationDeleteUser = () => {
+    return {
+        type: AUTHENTICATION_DELETE_USER
+    }
+}
 
 
 //// thunk actions
 export const loginRequest = (user) => {
     return (dispatch) => {
-        dispatch(requestLoading(true));
+        dispatch(authenticationLoading());
         const body = {
             userName: user.userName,
             password: user.password
         }
-
-        fetch('api/authentication/login', {
+        /*
+        axios.post(`api/authentication/login`, body)
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+            });*/
+            
+        
+        fetch(`api/authentication/login`, {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
         })
             .then((response) => {
+                console.log('response: ', response)
+                dispatch(authenticationLoading());
+                /*if (!response.ok) {
+                    const err = response.json();
+                    //console.log('err : ', err)
 
-                dispatch(requestLoading(false));
+                    throw new err
+                    return response.json();
+
+                }*/
                 return response.json();
             })
             .then((body) => {
-                const token = "Bearer " + body.access_token;
-                localStorage.setItem("accessToken", token);
-                localStorage.setItem("userId", body.userId);
-                localStorage.setItem("userName", user.userName);
-                dispatch(setToken());
+                console.log('body: ', body)
+
+                if (body.details)
+                    dispatch(authenticationError(body.details));
+                else {
+                    const token = "Bearer " + body.access_token;
+                    localStorage.setItem("accessToken", token);
+                    localStorage.setItem("userId", body.userId);
+                    localStorage.setItem("userName", user.userName);
+                    dispatch(authenticationSetUser({
+                        token: token,
+                        userId: body.userId,
+                        userName: user.userName
+                    }));
+                }
+                
             })
-            .catch(() => dispatch(requestError(true)));
+            .catch(() => {
+                
+            });
     }
 }
 
 
 export const registryRequest = (user) => {
     return (dispatch) => {
-        dispatch(requestLoading(true));
+        dispatch(authenticationLoading());
+
         const body = {
             email: user.email,
             userName: user.userName,
@@ -72,8 +113,8 @@ export const registryRequest = (user) => {
             body: JSON.stringify(body)
         })
             .then((response) => {
-
-                dispatch(requestLoading(false));
+                console.log('response: ', response)
+                dispatch(authenticationLoading());
                 return response.json();
             })
             .then((body) => {
@@ -81,9 +122,13 @@ export const registryRequest = (user) => {
                 localStorage.setItem("accessToken", token);
                 localStorage.setItem("userId", body.userId);
                 localStorage.setItem("userName", user.userName);
-                dispatch(setToken());
+                dispatch(authenticationSetUser({
+                    token: token,
+                    userId: body.userId,
+                    userName: user.userName
+                }));
             })
-            .catch(() => dispatch(requestError(true)));
+            .catch(() => { dispatch(authenticationError()) });
     }
 }
 
@@ -92,22 +137,23 @@ export const registryRequest = (user) => {
 
 
 const initialToken = {
+    user: null,
     error: false,
-    load: false,
-    login: false
+    errorMessage: null,
+    loading: false,
 }
 
 
 export const authentication = (state = initialToken, action) => {
     switch (action.type) {
-        case SET_TOKEN:
-            return Object.assign({}, state, { login: true })
-        case DELETE_TOKEN:
-            return Object.assign({}, state, { login: false })
-        case REQUEST_ERROR:
-            return Object.assign({}, state, { error: action.error})
-        case REQUEST_LOADING:
-            return Object.assign({}, state, { load: action.load })
+        case AUTHENTICATION_SET_USER:
+            return { ...state, user: action.payload, error: false, errorMessage: null }
+        case AUTHENTICATION_DELETE_USER:
+            return {...state, user: null}
+        case AUTHENTICATION_ERROR:
+            return { ...state, error: true, errorMessage: action.payload}
+        case AUTHENTICATION_LOADING:
+            return { ...state, loading: !state.loading }
         default:
             return state;
     }

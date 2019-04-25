@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.DbContext;
 using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,11 +28,12 @@ namespace ServiceLayer.NotificationCRUDService
             context.SaveChanges();
         }
 
-        public NotificationDetailDTO Read(int Id)
+        public NotificationDetailDTO Read(int id)
         {
-            var notification = context.Notifications.Find(Id);
-            if (notification == null)
-                throw new Exception("Notification not found");
+            var notification = context.Notifications.Find(id);
+            notification.NotificationLogs = context.NotificationLogs.Where(log => log.NotificationId == id).ToList();
+            notification.NotificationActions = context.NotificationActions.Where(action => action.NotificationId == id).ToList();
+
             return notification.GetNotificationDetailDTO();
         }
 
@@ -53,6 +55,19 @@ namespace ServiceLayer.NotificationCRUDService
                 throw new Exception("Notification not found");
             context.Notifications.Remove(notification);
             context.SaveChanges();
+        }
+
+
+        public NotificationDetailDTO GetRandomNotification()
+        {
+            var count = context.Notifications.Count();
+            var notifications = context.Notifications.ToList();
+            Random rnd = new Random(DateTime.Now.Second);
+            var id = rnd.Next(0, count);
+            var notification = notifications[id];
+            notification.NotificationActions = context.NotificationActions.Where(action => action.NotificationId == id).ToList();
+
+            return notification.GetNotificationDetailDTO();
         }
     }
 }

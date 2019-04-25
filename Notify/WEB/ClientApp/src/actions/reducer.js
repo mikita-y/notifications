@@ -2,13 +2,16 @@
 
 import { authentication } from './authentication'
 import { notificationList } from './notificationList'
-import { activeNotification } from './activeNotification'
+import { notification } from './activeNotification'
+import { randomNotification } from './randomNotification'
+
 
 
 const reducer = combineReducers({
     authentication,
     notificationList,
-    activeNotification
+    notification,
+    randomNotification
 })
 
 

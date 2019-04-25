@@ -10,5 +10,6 @@ namespace ServiceLayer.NotificationCRUDService
         NotificationDetailDTO Read(int Id);
         void Update(NotificationDetailDTO Obj);
         void Delete(int Id);
+        NotificationDetailDTO GetRandomNotification();
     }
 }

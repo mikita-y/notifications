@@ -1,6 +1,6 @@
 ﻿using DataAccessLayer.DbContext;
 using DataAccessLayer.Models;
-using ServiceLayer.NotificationLogListService;
+using ServiceLayer.NotificationListService;
 using System;
 using System.Linq;
 
@@ -12,18 +12,25 @@ namespace Test
         {
             using (var context = new NotifyContext())
             {
-                //var service = new NotificationLogListService(context);
+                var service = new NotificationListService(context);
 
-                //var logList =service.GetNotificationLogsList(new LogCriterion {Page = 0, PageSize = 5, NotificationId = 20 });
+                var List =service.FilterSortingPaging(new Criterion {
+                    userId = "9e1d0156-27e1-41f4-9a2e-f727a1f898ce",
+                    sorting = Sorting.Newer,
+                    Filterby = null,
+                    SearchText= null,
+                    page = 1,
+                    pageSize = 10
+                });
 
-               // foreach (var log in logList.LogList)
-                //    Console.WriteLine($"{log.Date}\n{log.Change}");
+                foreach (var n in List.Notifications)
+                    Console.WriteLine($"{n.Title}\n");
 
+                Console.ReadLine();
 
+               //context.LogEntries.RemoveRange(context.LogEntries.Where(l => l.Level == "Information"));
 
-               context.LogEntries.RemoveRange(context.LogEntries.Where(l => l.Level == "Information"));
-
-               context.SaveChanges();
+                //context.SaveChanges();
 
 
                 /* CRUD Service
