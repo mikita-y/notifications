@@ -1,18 +1,31 @@
 ﻿import React from 'react';
 import './UserMenu.css'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { connect } from 'react-redux'
+import  NotificationUpdatePage  from './NotificationUpdatePage/NotificationUpdatePage'
 
 
 import NotificationListPage from './NotificationListPage/NotificationListPage';
-//import NotificationUpdatePage from '../NotificationUpdatePage/NotificationUpdatePage';
 
 
-const UserMenu = () => {
+const UserMenu = ({ login }) => {
 
+    if(login)
     return (
-        <div className="menu-container">
-            <NotificationListPage />
-        </div>
+            <div className="menu-container">
+                <NotificationListPage />
+            </div>
     )
 }
 
-export default UserMenu;
+const mapStateToProps = state => ({
+    login: state.authentication.user,
+})
+
+const mapDispatchToProps = dispatch => {
+    return {
+        //authenticate: (user) => dispatch(authenticationSetUser(user))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserMenu)

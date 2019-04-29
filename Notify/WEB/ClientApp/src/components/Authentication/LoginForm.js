@@ -1,8 +1,9 @@
 ﻿import React, { useState } from 'react';
 import { connect } from 'react-redux'
+import './Authentication.css'
+
 
 import { loginRequest } from '../../actions/authentication'
-
 import  AuthenticationError  from './AuthenticationError'
 
 function LoginForm({ authenticate}) {
@@ -23,10 +24,12 @@ function LoginForm({ authenticate}) {
     }
 
     return (
-        <div>
+        <div className="login-size">
+            <div className="login-container" >
+            <h1> Log In </h1>
             <form>
                 <label>
-                    Username:
+                        <h4> Username: </h4>
                 <input
                         value={form.userName}
                         name="userName"
@@ -35,7 +38,7 @@ function LoginForm({ authenticate}) {
                 </label>
                 <br />
                 <label>
-                    Password:
+                        <h4> Password:</h4>
                 <input
                         value={form.password}
                         name="password"
@@ -44,13 +47,14 @@ function LoginForm({ authenticate}) {
                     />
                 </label>
                 <br />
-            </form>
-            <button
-                onClick={getToken}>
-                Submit
-            </button>
-
-            <AuthenticationError />
+                </form>
+                <button className="submit-button"
+                    onClick={getToken}>
+                        Submit
+                </button>
+                <br />
+                <AuthenticationError />
+            </div>
         </div>
 
     );

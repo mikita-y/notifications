@@ -1,7 +1,10 @@
 ﻿import React, { useState } from 'react';
 import { connect } from 'react-redux'
+import './Authentication.css'
 
 import { registryRequest } from '../../actions/authentication'
+import AuthenticationError from './AuthenticationError'
+
 
 function RegistryForm({ authenticate }) {
     const [form, setValues] = useState({
@@ -22,41 +25,47 @@ function RegistryForm({ authenticate }) {
     }
 
     return (
-        <div>
-            <form>
-                <label>
-                    Email:
-                <input
-                        value={form.email}
-                        name="email"
-                        onChange={updateField}
-                    />
-                </label>
+        <div className="login-size">
+            <div className="registry-container">
+                <h1>Registration</h1>
+                <form>
+                    <label>
+                        <h4>Email:</h4>
+                        <input
+                            value={form.email}
+                            name="email"
+                            onChange={updateField}
+                        />
+                    </label>
+                    <br />
+                    <label>
+                        <h4>Username:</h4>
+                        <input
+                            value={form.userName}
+                            name="userName"
+                            onChange={updateField}
+                        />
+                    </label>
+                    <br />
+                    <label>
+                        <h4>Password:</h4>
+                        <input
+                            value={form.password}
+                            name="password"
+                            type="password"
+                            onChange={updateField}
+                        />
+                    </label>
+                    <br />
+                </form>
+                <button className="submit-button"
+                    onClick={getToken}>
+                    Submit
+                </button>
                 <br />
-                <label>
-                    Username:
-                <input
-                        value={form.userName}
-                        name="userName"
-                        onChange={updateField}
-                    />
-                </label>
-                <br />
-                <label>
-                    Password:
-                <input
-                        value={form.password}
-                        name="password"
-                        type="password"
-                        onChange={updateField}
-                    />
-                </label>
-                <br />
-            </form>
-            <button
-                onClick={getToken}>
-                Submit
-            </button>
+                <AuthenticationError />
+            </div>
+
         </div>
 
     );

@@ -5,6 +5,8 @@ import './App.css'
 
 import AppHeader from '../AppHeader/AppHeader';
 import UserMenu from '../UserMenu/UserMenu'
+import NotificationUpdatePage from '../UserMenu/NotificationUpdatePage/NotificationUpdatePage'
+
 import About from '../AppInfo/About';
 import Contacts from '../AppInfo/Contacts';
 import Login from '../Authentication/LoginForm';
@@ -31,14 +33,15 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <div className="app-conteiner">
+                <div className="app-container">
                     <AppHeader />
                     <Switch>
                         <Route exact path="/" component={About} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/registry" component={Registry} />
                         <Route exact path="/contacts" component={Contacts} />
-                        <Route exact path={`/${this.props.login ? this.props.login.userName : ""}`} component={UserMenu} />
+                        <Route exact path={`/${this.props.login ? this.props.login.userName : null}`} component={UserMenu} />
+                        <Route exact path={`/update`} component={NotificationUpdatePage} />
                     </Switch>
                 </div>
             </Router>
@@ -58,3 +61,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
+
+
+//                        <Route exact path={`/${this.props.login ? `${this.props.login.userName}/update` : ""}`} component={NotificationUpdatePage} /> 

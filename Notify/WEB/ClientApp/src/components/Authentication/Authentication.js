@@ -9,15 +9,11 @@ function Authentication({ login }) {
     if (!login)
         return (
             <div className="authentication-container">
-                    <Link to="/login">
-                        <button>
+                <Link to="/login">
                             Login
-                        </button>
-                    </Link>
+                </Link>
                     <Link to="/registry">
-                        <button>
                             Registry
-                        </button>
                     </Link>
                    
                 </div>

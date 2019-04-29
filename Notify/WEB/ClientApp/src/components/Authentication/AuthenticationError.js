@@ -7,7 +7,7 @@ function AuthenticationError({ error }) {
     if(!error)
         return null;
     else
-        return <p> {error} </p>
+        return <h4> {error} </h4>
 }
 
 

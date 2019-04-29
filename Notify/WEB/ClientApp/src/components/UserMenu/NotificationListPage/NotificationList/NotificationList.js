@@ -1,9 +1,14 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Link, redirect } from "react-router-dom";
+
 import './NotificationList.css'
 
 import { getNotification, deleteNotification } from '../../../../actions/activeNotification'
 import { getNotificationList } from '../../../../actions/notificationList'
+
+import { withRouter } from 'react-router-dom';
+import { Button } from 'reactstrap';
 
 
 
@@ -11,6 +16,7 @@ class NotificationList extends Component {
 
      constructor(props) {
          super(props);
+         this.routeChange = this.routeChange.bind(this);
      }
 
      deleteNotification = (id) => {
@@ -21,6 +27,13 @@ class NotificationList extends Component {
      createNotification = () => {
          //this.props.createNotification();
      }
+
+    routeChange(id) {
+        this.props.toggleNotification(id);
+        console.log(id);
+        let path = `/update`;
+        this.props.history.push(path);
+    }
 
     render() {
         if (!this.props.notificationList) {
@@ -41,10 +54,13 @@ class NotificationList extends Component {
                                      onClick={() => this.props.toggleNotification(item.id)}>
                                      Show
                                  </button>
-                                 <button
-                                     /*onClick={() => this.props.updateNotification(item.id)}*/>
+
+                                 <Button color="primary" className="px-4"
+                                     onClick={() => this.routeChange(item.id)}>
                                      Update
-                                 </button>
+                                </Button>
+
+                                 
                                  <button
                                      onClick={() => this.deleteNotification(item.id)}>
                                      Delete
@@ -60,6 +76,7 @@ class NotificationList extends Component {
 
 const mapStateToProps = state => ({
     notificationList: state.notificationList.list,
+    name: state.authentication.user ? state.authentication.user.userName : null,
 })
 
 const mapDispatchToProps = (dispatch) => {
@@ -72,4 +89,16 @@ const mapDispatchToProps = (dispatch) => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotificationList)
+export default  withRouter(connect(mapStateToProps, mapDispatchToProps)(NotificationList))
+
+
+
+
+/*
+  <Link to={`/update`}>
+                                     <button
+                                         onClick={() => this.props.toggleNotification(item.id)}>
+                                         Update
+
+                                    </button>
+                                 </Link>*/

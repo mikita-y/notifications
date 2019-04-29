@@ -1,47 +1,28 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux'
-
+import './Notification.css'
 import { deleteNotification } from '../../actions/activeNotification'
 import { getNotificationList } from '../../actions/notificationList'
 
 
 export default function Notification( {notification = null, error = null } ){
 
-        if (error) {
-            return <h1>Error</h1>
-        }
-        else     
-            if (!notification) {
+    if (error) {
+        return <h1>Error</h1>
+    }
+    else
+        if (!notification) {
             return null
         }
         else {
             return (
-                <div>
-                    <table border="1">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    {notification.title}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {notification.body}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {notification.icon}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                   <img src={notification.image}/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div className="notification-container">
+                    <img className="notification-icon" src={notification.icon} />
+                    <h4 className="notification-title">{notification.title} </h4>
+                    <p className="notification-body"> {notification.body} </p>
+                    <img className="notification-image" src={notification.image} />
                 </div>
+
             )
         }
 }

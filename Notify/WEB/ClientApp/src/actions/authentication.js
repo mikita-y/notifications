@@ -43,16 +43,7 @@ export const loginRequest = (user) => {
         const body = {
             userName: user.userName,
             password: user.password
-        }
-        /*
-        axios.post(`api/authentication/login`, body)
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error)
-            });*/
-            
+        }          
         
         fetch(`api/authentication/login`, {
             method: 'post',
