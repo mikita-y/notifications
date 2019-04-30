@@ -98,7 +98,7 @@ export const getNotificationList = () => {
                 console.log("getList ", result);
                 dispatch(setNotificationList(result));
             })
-            .catch(() => { console.log('error in list'); dispatch(notificationListError("хуйня в лист")) });
+            .catch(() => { console.log('error in list'); dispatch(notificationListError("Error in list")) });
     }
 }
 
