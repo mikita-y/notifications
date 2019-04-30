@@ -14,5 +14,6 @@ namespace ServiceLayer.NotificationCRUDService
         public string Image { get; set; }
         public List<NotificationAction> NotificationActions { get; set; }
         public List<NotificationLog> NotificationLogs { get; set; }
+        public string UserId { get; set; }
     }
 }

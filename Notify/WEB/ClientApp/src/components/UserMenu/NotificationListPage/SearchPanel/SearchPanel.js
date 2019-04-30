@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import './SearchPanel.css'
 
 import Sorting from './Sorting';
 import Filtering from './Filtering';
@@ -14,8 +15,8 @@ import SearchText from './SearchText';
      }
 
      render() {
-        return (
-            <div>
+         return (
+             <div className="search-panel-container">
 
                 <table border="1">
                     <tbody>

@@ -10,11 +10,11 @@ const AppHeader = ({ login }) => {
 
         return (
             <div className="header-container">
-                <h2 className="title">
+                <div className="title">
                     <Link to={`/${login ? login.userName : ""}`}>
                         Notification Service 
                     </Link> 
-                </h2>
+                </div>
                 <div className="buttons">
                     <Link to="/">
                             About

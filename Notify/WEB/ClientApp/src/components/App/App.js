@@ -41,7 +41,7 @@ class App extends Component {
                         <Route exact path="/registry" component={Registry} />
                         <Route exact path="/contacts" component={Contacts} />
                         <Route exact path={`/${this.props.login ? this.props.login.userName : null}`} component={UserMenu} />
-                        <Route exact path={`/update`} component={NotificationUpdatePage} />
+                        <Route exact path={`/update`} component={NotificationUpdatePage } />
                     </Switch>
                 </div>
             </Router>

@@ -2,7 +2,7 @@
 
 import { authentication } from './authentication'
 import { notificationList } from './notificationList'
-import { notification } from './activeNotification'
+import { notification } from './notification/activeNotification'
 import { randomNotification } from './randomNotification'
 
 

@@ -31,16 +31,13 @@ export const getRandomNotificationLoading = () => {
 
 
 export const getRandomNotification = () => {
-    console.log("getRANDOM");
     return (dispatch) => {
         setTimeout(() => {
             fetch(`api/notificationcrud/getrandomnotification`)
                 .then((response) => {
-                    console.log("noti ", response);
                     return response.json();
                 })
                 .then((result) => {
-                    console.log("noti ", result);
                     dispatch(getRandomNotificationSuccess(result));
                 })
                 .catch(() => dispatch(getRandomNotificationError("err")));

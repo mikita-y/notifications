@@ -18,14 +18,18 @@ function About({ getRandomNotification, notification }) {
 
     return (
         <div className="about-container">
-            <div className="about-info">
-                <h3>Notification Service</h3>
-                <p>Information about Notification Service</p>
+            <div className="left-page-container">
+                <div className="about-info">
+                    <h3>Notification Service</h3>
+                    <p>Information about Notification Service</p>
+                </div>
             </div>
-            <div className="about-notification">
-                <Notification 
-                    notification={notification ? notification : initNotification}
-                />
+            <div className="right-page-container">
+                <div className="notification-size-container">
+                    <Notification
+                        notification={notification ? notification : initNotification}
+                    />
+                </div>
             </div>
 
         </div>

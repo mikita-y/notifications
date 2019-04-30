@@ -17,9 +17,10 @@ namespace ServiceLayer.NotificationCRUDService
             context = _context;
         }
 
-        public void Create(NotificationDetailDTO Obj)
+        public void Create(NotificationDetailDTO Obj, string userId)
         {
             var NewNotification = Obj.GetNotification();
+            NewNotification.UserId = userId;
             context.Notifications.Add(NewNotification);
 
             var log = NotificationLogsHelper.Creating(NewNotification);

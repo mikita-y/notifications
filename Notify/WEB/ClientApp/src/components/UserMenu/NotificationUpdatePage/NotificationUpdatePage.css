@@ -1,27 +1,24 @@
-﻿.about-container {
-    display: flex;
-    flex-direction: row;
+﻿.update-page-container {
     width: 100%;
     height: 100%;
-}
-.about-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background-color: white;
+    justify-content: space-between;
     align-items: center;
-    width: 60%;
-    height: 30%;
 }
 
-.contacts {
+.page-container {
     display: flex;
+    width: 100%;
+    height: 100%;
     flex-direction: row;
-    justify-content: center;
-    background-color: white;
+    justify-content: space-between;
     align-items: center;
-    width: 40%;
-    height: 40%;
+}
+
+.update-title {
+    margin: 2%;
+    width: 100%;
 }
 
 .left-page-container {
@@ -30,9 +27,7 @@
     height: 100%;
     flex-direction: column;
     justify-content: center;
-    align-items:center;
 }
-
 
 .right-page-container {
     display: flex;
@@ -50,4 +45,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.save-button {
+    height: 10%;
 }

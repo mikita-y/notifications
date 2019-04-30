@@ -17,7 +17,7 @@ namespace ServiceLayer.NotificationCRUDService
                 Icon = item.Icon,
                 Image = item.Image,
                 NotificationActions =  item.NotificationActions,
-                NotificationLogs = item.NotificationLogs,
+                NotificationLogs = item.NotificationLogs
             };
             
         }

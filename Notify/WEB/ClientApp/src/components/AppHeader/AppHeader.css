@@ -1,6 +1,7 @@
 ﻿.header-container {
     display: flex;
     flex-direction: row;
+    align-content: flex-start;
     align-items: center;
     background-color: antiquewhite;
     width: 100%;
@@ -21,15 +22,12 @@
 
 
 a {
-    font-family: 'Open Sans Condensed', sans-serif;
-    text-decoration: inherit;
     text-align: center;
+    text-
     position: relative;
     width: 100%;
-    display: block;
     font-size: 37px;
     color: #fff;
-    padding: 10px;
     border-left: inset;
     border-right: outset;
     background: black;
@@ -38,9 +36,6 @@ a {
     -o-transition: all 3s ease-in-out;
     transition: all 0.2s ease-in-out;
 }
-
-
-
     a:hover {
         opacity: 0.7;
     }

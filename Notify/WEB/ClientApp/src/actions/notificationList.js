@@ -95,10 +95,9 @@ export const getNotificationList = () => {
                 return response.json();
             })
             .then((result) => {
-                console.log("getList ", result);
                 dispatch(setNotificationList(result));
             })
-            .catch(() => { console.log('error in list'); dispatch(notificationListError("хуйня в лист")) });
+            .catch(() => { console.log('error in list'); dispatch(notificationListError("Error")) });
     }
 }
 

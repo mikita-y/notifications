@@ -1,7 +1,7 @@
 ﻿.authentication-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     width: 100%;
     height:100%;
@@ -54,41 +54,31 @@
     margin: auto;
 }
 
-.login-button {
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 35px;
-    margin: auto;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: rgba(3,3,3,.8);
-    overflow: hidden;
-    opacity: 0.4;
-    box-shadow: 10px 10px 30px #000;
-}
+
 
 .logout-button {
-    font-family: 'Open Sans Condensed', sans-serif;
-    text-decoration: inherit;
-    text-align: center;
-    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    display: block;
     font-size: 37px;
     color: #fff;
-    padding: 25px;
     border-left: inset;
     border-right: outset;
+    border-bottom: none;
+    border-top: none;
     background: black;
+    margin: 0px;
+    padding: 0px;
     -webkit-transition: all 3s ease-in-out;
     -moz-transition: all 3s ease-in-out;
     -o-transition: all 3s ease-in-out;
     transition: all 0.2s ease-in-out;
+}
+
+.logout-button:hover {
+    opacity: 0.7;
 }
 
 .submit-button {
@@ -103,6 +93,7 @@ h1{
   font-family: 'Open Sans Condensed', sans-serif;
   position: relative;
   margin-top: 0px;
+  margin-bottom: 0px;
   text-align: center;
   color: #ddd;
   text-shadow: 3px 3px 10px #000;

@@ -25,7 +25,7 @@ namespace ServiceLayer.NotificationListService
             notifications = context.Notifications.Where(x => x.UserId == criterion.userId).SortingBy(criterion).Filter(criterion);
 
             int allPages = notifications.Count() / criterion.pageSize;
-            if ((notifications.Count() % criterion.pageSize) > 0)
+            if ((notifications.Count() % criterion.pageSize) >= 0)
                 allPages++;
             if (criterion.pageSize == 0)
                 criterion.pageSize = 10;

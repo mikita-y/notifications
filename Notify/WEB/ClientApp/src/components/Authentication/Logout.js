@@ -5,7 +5,7 @@ import { Button } from 'reactstrap';
 import { connect } from 'react-redux'
 import "./Authentication.css"
 import { authenticationDeleteUser } from '../../actions/authentication'
-import { clearNotification } from '../../actions/activeNotification'
+import { clearNotification } from '../../actions/notification/activeNotification'
 
 
 

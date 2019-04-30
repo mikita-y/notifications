@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.NotificationCRUDService;
+using WEB.Model;
 
 namespace WEB.Controllers
 {
@@ -31,29 +32,31 @@ namespace WEB.Controllers
         // POST api/notificationcrud
         [Authorize]
         [HttpPost("[action]")]
-        public IActionResult Create([FromBody]NotificationDetailDTO obj)
+        public IActionResult Create([FromBody]NotificationModel obj)
         {
             if (obj == null)
             {
                 return BadRequest();
             }
-
-            _service.Create(obj);
-            return Ok(obj);
+            
+            _service.Create(obj.Notification, obj.UserId);
+            return Ok(obj.Notification);
         }
 
         // PUT api/notificationcrud/
         [Authorize]
-        [HttpPut]
-        public IActionResult Put([FromBody]NotificationDetailDTO obj)
+        [HttpPost("[action]")]
+        public IActionResult Update([FromBody]NotificationModel obj)
         {
             if (obj == null)
             {
                 return BadRequest();
             }
 
-            _service.Update(obj);
-            return Ok(obj);
+            
+            _service.Update(obj.Notification);
+            //return BadRequest();
+            return Ok(obj.Notification);
         }
 
         // DELETE api/notificationcrud/5

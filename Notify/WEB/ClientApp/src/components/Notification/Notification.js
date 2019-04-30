@@ -1,11 +1,18 @@
-﻿import React, { Component } from 'react';
-import { connect } from 'react-redux'
+﻿import React from 'react';
 import './Notification.css'
-import { deleteNotification } from '../../actions/activeNotification'
-import { getNotificationList } from '../../actions/notificationList'
+
 
 
 export default function Notification( {notification = null, error = null } ){
+
+
+    function icon() {
+        return notification.icon ? <img className="notification-icon" src={notification.icon} /> : null;
+    }
+
+    function image() {
+        return notification.image ? <img className="notification-image" src={notification.image} /> : null;
+    }
 
     if (error) {
         return <h1>Error</h1>
@@ -17,28 +24,16 @@ export default function Notification( {notification = null, error = null } ){
         else {
             return (
                 <div className="notification-container">
-                    <img className="notification-icon" src={notification.icon} />
-                    <h4 className="notification-title">{notification.title} </h4>
-                    <p className="notification-body"> {notification.body} </p>
-                    <img className="notification-image" src={notification.image} />
+                    <div className="notification-title">
+                        {icon()}
+                        <h4 className="notification-titles">{notification.title} </h4>
+                    </div>
+                    <div className="notification-body">
+                        <p className="notification-bodies">{notification.body} </p>
+                        {image()}
+                    </div>
                 </div>
 
             )
         }
 }
-
-
-
-/*const mapStateToProps = state => ({
-    notification: state.notification.activeNotification.notification,
-    error: state.notification.activeNotification.error
-})
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        deleteNotification: (id) => dispatch(deleteNotification(id)),
-        updateNotifcationList: () => dispatch(getNotificationList())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Notification)*/

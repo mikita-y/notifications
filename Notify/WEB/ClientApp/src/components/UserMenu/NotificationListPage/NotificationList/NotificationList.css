@@ -2,25 +2,63 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%;
+    width: 65%;
+    height: 100%;
 }
-.list-case {
-    background-color: antiquewhite;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
 
-
-    outline: 2px solid #000; /* Чёрная рамка */
-    border: 3px solid #fff; /* Белая рамка */
-}
 span {
     display: flex;
     justify-content: center;
     width: 40%;
+    height: 100%;
 }
-.buttons {
+.list-buttons {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    flex-shrink: 2;
     width: 60%;
+    height: 100%;
 }
+
+
+
+.list-case {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Open Sans Condensed', sans-serif;
+    text-decoration: inherit;
+    position: relative;
+    background-color: rgba(120, 0, 0, 0.2);
+    border-color: black;
+    border-width: 5px;
+    width: 100%;
+    color: #fff;
+    border-radius: 10px;
+    margin: 1px;
+    padding: 2px;
+    border: solid;
+    -webkit-transition: all 3s ease-in-out;
+    -moz-transition: all 3s ease-in-out;
+    -o-transition: all 3s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+
+    .list-case:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+/*button {
+    font-family: 'Open Sans Condensed', sans-serif;
+    text-decoration: none;
+    width: 80%;
+    display: block;
+    padding: 0%;
+    margin: 1px;
+    border-radius: 6px;
+    border-width: 3px;
+    border: solid;
+    -webkit-transition: all 2s ease-in-out;
+    -moz-transition: all 2s ease-in-out;
+    -o-transition: all 2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}*/
