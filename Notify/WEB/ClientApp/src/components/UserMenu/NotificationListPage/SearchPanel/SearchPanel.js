@@ -17,7 +17,6 @@ import SearchText from './SearchText';
      render() {
          return (
              <div className="search-panel-container">
-
                 <table border="1">
                     <tbody>
                     <tr>

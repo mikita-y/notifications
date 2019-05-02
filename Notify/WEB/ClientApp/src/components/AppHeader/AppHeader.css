@@ -23,7 +23,6 @@
 
 a {
     text-align: center;
-    text-
     position: relative;
     width: 100%;
     font-size: 37px;
@@ -36,6 +35,6 @@ a {
     -o-transition: all 3s ease-in-out;
     transition: all 0.2s ease-in-out;
 }
-    a:hover {
-        opacity: 0.7;
-    }
+a:hover {
+    opacity: 0.7;
+}

@@ -29,7 +29,6 @@ const AppHeader = ({ login }) => {
 };
 
 
-
 const mapStateToProps = state => ({
     login: state.authentication.user,
 })

@@ -1,10 +1,7 @@
 ﻿using DataAccessLayer.DbContext;
-using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ServiceLayer.NotificationCRUDService
 {
@@ -31,10 +28,10 @@ namespace ServiceLayer.NotificationCRUDService
 
         public NotificationDetailDTO Read(int id)
         {
-            var notification = context.Notifications.Find(id);
-            notification.NotificationLogs = context.NotificationLogs.Where(log => log.NotificationId == id).ToList();
-            notification.NotificationActions = context.NotificationActions.Where(action => action.NotificationId == id).ToList();
-
+            var notification = context.Notifications
+                .Include(n => n.NotificationActions)
+                .Include(n => n.NotificationLogs)
+                .Where(n => n.Id == id).First();
             return notification.GetNotificationDetailDTO();
         }
 
@@ -50,7 +47,6 @@ namespace ServiceLayer.NotificationCRUDService
 
         public void Delete(int Id)
         {
-            //context.NotificationLogs.RemoveRange(context.NotificationLogs.Where(log => log.NotificationId == Id));
             var notification = context.Notifications.Find(Id);
             if (notification == null)
                 throw new Exception("Notification not found");
@@ -62,11 +58,9 @@ namespace ServiceLayer.NotificationCRUDService
         public NotificationDetailDTO GetRandomNotification()
         {
             var count = context.Notifications.Count();
-            var notifications = context.Notifications.ToList();
             Random rnd = new Random(DateTime.Now.Second);
             var id = rnd.Next(0, count);
-            var notification = notifications[id];
-            notification.NotificationActions = context.NotificationActions.Where(action => action.NotificationId == id).ToList();
+            var notification = context.Notifications.Include(n => n.NotificationActions).Skip(id).First();
 
             return notification.GetNotificationDetailDTO();
         }

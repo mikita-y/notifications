@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import './NotificationAction.css'
 import { withRouter } from 'react-router-dom';
-import { Button } from 'reactstrap';
 
 
 function NotificationActions({ notification, history }) {
@@ -14,10 +13,10 @@ function NotificationActions({ notification, history }) {
     if (notification)
         return (
             <div className="notification-actions">
-                <Button color="primary" className="px-4"
+                <button className="notification-action"
                     onClick={() => toUpdate()}>
                     Update
-                </Button>
+                </button>
             </div>
         )
     else

@@ -7,6 +7,7 @@ namespace WEB.Model
 {
     public class ErrorModel
     {
-        public string Details { get; set; }
+        public int Code { get; set; }
+        public string Description { get; set; }
     }
 }

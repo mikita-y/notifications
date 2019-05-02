@@ -34,25 +34,15 @@ namespace WEB.Controllers
         public async Task<IActionResult> Login([FromBody]LoginModel model)
         {
             var user = await userManager.FindByNameAsync(model.userName);
-            var checkPassword = await userManager.CheckPasswordAsync(user, model.password);
-
-            if (user != null && await userManager.CheckPasswordAsync(user, model.password))
-            {
-                return Token(user);
-            }
-
             if (user == null)
             {
-                return Unauthorized(new ErrorModel { Details = "Name not found" });
+                return Unauthorized(new List<ErrorModel> { new ErrorModel { Code = 401, Description = "Name not found" } });
             }
             if (!await userManager.CheckPasswordAsync(user, model.password))
             {
-                return Unauthorized(new ErrorModel { Details = "Password is bad" });
+                return Unauthorized(new List<ErrorModel> { new ErrorModel { Code = 401, Description = "Incorrect password" } });
             }
-            /// 500
-            /// 400
-            /// 200 результат
-            return Unauthorized(new ErrorModel{ Details = "flop"});
+            return Token(user);
         }
 
         [HttpPost]
@@ -60,13 +50,12 @@ namespace WEB.Controllers
         public async Task<IActionResult> Registration([FromBody]RegistrModel model)
         {
             User user = new User { Email = model.Email, UserName = model.UserName };
-            // добавляем пользователя
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
                 return Token(user);
             }
-            return Unauthorized("все хуево");
+            return Unauthorized(result.Errors);
         }
 
         private IActionResult Token(User user)

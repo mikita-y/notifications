@@ -1,8 +1,5 @@
 ﻿using DataAccessLayer.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ServiceLayer.NotificationCRUDService
 {
@@ -47,7 +44,7 @@ namespace ServiceLayer.NotificationCRUDService
                 Changing += "Image update\n";
                 DatabaseNotification.Image = UserNotification.Image;
             }
-            //разработать как кнопки будут удаляться и добавляться в бд
+
             if(DatabaseNotification.NotificationActions == null)
             {
                 if (UserNotification.NotificationActions != null)
@@ -64,7 +61,7 @@ namespace ServiceLayer.NotificationCRUDService
 
                 }
             }
-            else //(DatabaseNotification.NotificationActions.SequenceEqual(UserNotification.NotificationActions))
+            else
             { 
                 Changing += "Action update\n";
                 DatabaseNotification.NotificationActions = UserNotification.NotificationActions;

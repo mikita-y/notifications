@@ -14,21 +14,17 @@ import { getNotificationList } from '../../../actions/notificationList'
 
 class NotificationListPage extends Component {
 
-    componentDidMount() {
-        this.props.getNotificationList();
-        console.log(this.props.all);
-    }
-
     render() {
         return (
             <div className="list-page-container">
-                <div className="list-page-container-top">
-                    <div className="left-page-container">
+                <div className="two-bar-container">
+                    <div className="list-container">
                         <SearchPanel />
-                        <NotificationList />
+                        <div className="list-block">
+                            <NotificationList />
+                        </div>
                     </div>
-                    <div className="right-page-container">
-                        <div className="notification-size-container">
+                    <div className="bar-block">
                             <Notification
                                 notification={this.props.notification}
                                 error={this.props.error}
@@ -36,7 +32,6 @@ class NotificationListPage extends Component {
                             <NotificationActions
                                 notification={this.props.notification}
                             />
-                        </div>
                     </div>
                 </div>
                 <Paging />

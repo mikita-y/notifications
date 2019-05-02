@@ -1,4 +1,4 @@
-﻿.list-container {
+﻿.notification-list-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,13 +14,11 @@ span {
 }
 .list-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-shrink: 2;
     width: 60%;
     height: 100%;
 }
-
-
 
 .list-case {
     display: flex;
@@ -37,28 +35,27 @@ span {
     margin: 1px;
     padding: 2px;
     border: solid;
-    -webkit-transition: all 3s ease-in-out;
-    -moz-transition: all 3s ease-in-out;
-    -o-transition: all 3s ease-in-out;
-    transition: all 0.1s ease-in-out;
 }
 
     .list-case:hover {
         background-color: rgba(0, 0, 0, 0.7);
     }
 
-/*button {
-    font-family: 'Open Sans Condensed', sans-serif;
+
+button.list-button {
+    display: inline-block;
+    color: white;
+    background: black;
+    font-weight: 700;
     text-decoration: none;
-    width: 80%;
-    display: block;
-    padding: 0%;
-    margin: 1px;
-    border-radius: 6px;
-    border-width: 3px;
-    border: solid;
-    -webkit-transition: all 2s ease-in-out;
-    -moz-transition: all 2s ease-in-out;
-    -o-transition: all 2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-}*/
+    user-select: none;
+    padding: .5em 2em;
+    outline: none;
+    border: 2px solid;
+    border-radius: 1px;
+    transition: 0.2s;
+}
+
+    button.list-button:hover {
+        background: red;
+    }

@@ -1,9 +1,4 @@
-﻿using DataAccessLayer.DbContext;
-using DataAccessLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using DataAccessLayer.Models;
 
 namespace ServiceLayer.NotificationCRUDService
 {
@@ -19,7 +14,6 @@ namespace ServiceLayer.NotificationCRUDService
                 NotificationActions =  item.NotificationActions,
                 NotificationLogs = item.NotificationLogs
             };
-            
         }
 
         public static Notification GetNotification(this NotificationDetailDTO item)

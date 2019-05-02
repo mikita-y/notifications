@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using DataAccessLayer.Models;
 
@@ -29,15 +27,6 @@ namespace ServiceLayer.NotificationListService
                     break;
                 case Sorting.Newer:
                     {
-                        var undef = new NotificationLog { Date = new DateTime() };
-                        //var logsUndef = notifications.Select(n => n.NotificationLogs).ToList();
-                        List<NotificationLog> logsUndef = new List<NotificationLog>();
-                        logsUndef.Add(undef);
-                        //var logs = notifications.SelectMany(n => (n.NotificationLogs.Count != 0) ? n.NotificationLogs : logsUndef,
-                         //   (n, l) => new { notification = n, Log = l }).ToList();
-                        //foreach (var n in logs)
-                         //   Console.WriteLine($"{n}\n");
-
                         notifications = notifications.SelectMany(n =>  n.NotificationLogs ,
                             (n, l) =>  new { notification = n, Log = l })
                           .Where(p => p.Log.Date == p.notification.NotificationLogs.Max(l => l.Date))  // Max - дата изменения, Min - дата создания

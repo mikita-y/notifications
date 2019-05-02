@@ -24,7 +24,7 @@ function LoginForm({ authenticate}) {
     }
 
     return (
-        <div className="login-size">
+        <div >
             <div className="login-container" >
             <h1> Log In </h1>
             <form>
@@ -48,13 +48,15 @@ function LoginForm({ authenticate}) {
                 </label>
                 <br />
                 </form>
-                <button className="submit-button"
-                    onClick={getToken}>
-                        Submit
-                </button>
-                <br />
-                <AuthenticationError />
+                <div className="form-button">
+                    <button className="submit-button"
+                        onClick={getToken}>
+                            Submit
+                    </button>
+                </div>
             </div>
+            <br />
+            <AuthenticationError />
         </div>
 
     );

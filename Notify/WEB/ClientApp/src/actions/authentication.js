@@ -1,12 +1,10 @@
-﻿import axios from 'axios'
-
+﻿
 export const AUTHENTICATION_DELETE_USER = 'DELETE_USER'
 export const AUTHENTICATION_SET_USER = 'SET_USER'
 export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
 export const AUTHENTICATION_LOADING = 'AUTHENTIFICATION_LOADING'
 
 
-/////actions
 
 export const authenticationError = (payload) => {
     return {
@@ -36,7 +34,6 @@ export const authenticationDeleteUser = () => {
 }
 
 
-//// thunk actions
 export const loginRequest = (user) => {
     return (dispatch) => {
         dispatch(authenticationLoading());
@@ -53,21 +50,31 @@ export const loginRequest = (user) => {
             .then((response) => {
                 console.log('response: ', response)
                 dispatch(authenticationLoading());
-                /*if (!response.ok) {
-                    const err = response.json();
-                    //console.log('err : ', err)
+                console.log(body)
+                if (body[0]) {
+                    let errors = [];
+                    let i = 0;
+                    body.forEach(function (err) {
+                        errors[i++] = err.description
 
-                    throw new err
-                    return response.json();
-
-                }*/
+                    });
+                    dispatch(authenticationError(errors))
+                }
                 return response.json();
             })
             .then((body) => {
-                console.log('body: ', body)
+                if (body[0]) {
+                    let errors = [];
+                    let i = 0;
+                    body.forEach(function (err) {
+                        errors[i++] = {
+                            id: i,
+                            description: err.description
+                        }
 
-                if (body.details)
-                    dispatch(authenticationError(body.details));
+                    });
+                    dispatch(authenticationError(errors))
+                }
                 else {
                     const token = "Bearer " + body.access_token;
                     localStorage.setItem("accessToken", token);
@@ -79,7 +86,6 @@ export const loginRequest = (user) => {
                         userName: user.userName
                     }));
                 }
-                
             })
             .catch(() => {
                 
@@ -104,27 +110,37 @@ export const registryRequest = (user) => {
             body: JSON.stringify(body)
         })
             .then((response) => {
-                console.log('response: ', response)
                 dispatch(authenticationLoading());
                 return response.json();
             })
             .then((body) => {
-                const token = "Bearer " + body.access_token;
-                localStorage.setItem("accessToken", token);
-                localStorage.setItem("userId", body.userId);
-                localStorage.setItem("userName", user.userName);
-                dispatch(authenticationSetUser({
-                    token: token,
-                    userId: body.userId,
-                    userName: user.userName
-                }));
+                if (body[0]) {
+                    let errors = [];
+                    let i = 0;
+                    body.forEach(function (err) {
+                        errors[i++] = {
+                            id: i,
+                            description: err.description
+                        }
+                    });
+                    dispatch(authenticationError(errors))
+                }
+                else {
+                    const token = "Bearer " + body.access_token;
+                    localStorage.setItem("accessToken", token);
+                    localStorage.setItem("userId", body.userId);
+                    localStorage.setItem("userName", user.userName);
+                    dispatch(authenticationSetUser({
+                        token: token,
+                        userId: body.userId,
+                        userName: user.userName
+                    }));
+                }
             })
             .catch(() => { dispatch(authenticationError()) });
     }
 }
 
-
-////////////reducer
 
 
 const initialToken = {

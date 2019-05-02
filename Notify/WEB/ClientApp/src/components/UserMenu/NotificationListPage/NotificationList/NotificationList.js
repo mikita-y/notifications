@@ -9,15 +9,14 @@ import { getNotificationList } from '../../../../actions/notificationList'
 import { withRouter } from 'react-router-dom';
 
 
-
 class NotificationList extends Component {
 
     constructor(props) {
         super(props);
     }
 
-    componentDidUpdate() {
-        //this.props.updateNotifcationList();
+    componentDidMount() {
+        this.props.updateNotifcationList();
     }
 
 
@@ -27,63 +26,67 @@ class NotificationList extends Component {
     }
 
     createNotification = () => {
-        /*const notification = {
-            userId: this.props.UserId
-        }*/
 
         this.props.setNotification(null);
 
-        const path = `/update`;
+        const path = `/create`;
         this.props.history.push(path);
     }
 
 
     render() {
-        if (!this.props.notificationList) {
-            return null
+        if (this.props.loading) {
+            return <h4> Loading... </h4>
         }
-         if (!this.props.notificationList.notifications) {
-             return null
-         }
-         else {
-             return (
-                 <div className="list-container">
-                     {this.props.notificationList.notifications.map(item => (
-                         <div key={item.id} className="list-case">
-                             
-                                 <span>{item.title} </span>
-                             <div className="list-buttons">
-                                 <button
-                                     onClick={() => this.props.toggleNotification(item.id)}>
-                                     Show
-                                 </button>
-                                 
-                                 <button
-                                     onClick={() => this.deleteNotification(item.id)}>
-                                     Delete
-                                 </button>
-                             
-                             </div>
-                         </div>))}
-                     <div className="list-case">
-                         <span>New notification </span>
-                         <div className="buttons">
-                             <button
-                                 onClick={() => this.createNotification()}>
-                                 Create
-                             </button>
-                         </div>
-                     </div>)
-                 </div>
+        else if (this.props.error) {
+            return (
+                <div>
+                    <h4> ERROR </h4>
+                    <p> {this.props.error} </p>
+                </div>
              )
-         }
-     }
- }
+        }
+        else {
+            return (
+                <div className="notification-list-container">
+                    {this.props.notificationList.notifications.map(item => (
+                        <div key={item.id} className="list-case">
+
+                            <span>{item.title} </span>
+                            <div className="list-buttons">
+                                <button className="list-button"
+                                    onClick={() => this.props.toggleNotification(item.id)}>
+                                    Show
+                                 </button>
+
+                                <button className="list-button"
+                                    onClick={() => this.deleteNotification(item.id)}>
+                                    Delete
+                                 </button>
+
+                            </div>
+                        </div>))}
+                    <div className="list-case">
+                        <span>New notification </span>
+                        <div className="list-buttons">
+                            <button className="list-button"
+                                onClick={() => this.createNotification()}>
+                                Create
+                             </button>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
+}
 
 const mapStateToProps = state => ({
     notificationList: state.notificationList.list,
     name: state.authentication.user ? state.authentication.user.userName : null,
-    id: state.notification.activeNotification.notification ? state.notification.activeNotification.notification.id : null
+    id: state.notification.activeNotification.notification ? state.notification.activeNotification.notification.id : null,
+    loading: state.notificationList.loading,
+    error: state.notificationList.errorMessage
 })
 
 const mapDispatchToProps = (dispatch) => {
@@ -98,15 +101,3 @@ const mapDispatchToProps = (dispatch) => {
 
 
 export default  withRouter(connect(mapStateToProps, mapDispatchToProps)(NotificationList))
-
-
-
-
-/*
-  <Link to={`/update`}>
-                                     <button
-                                         onClick={() => this.props.toggleNotification(item.id)}>
-                                         Update
-
-                                    </button>
-                                 </Link>*/

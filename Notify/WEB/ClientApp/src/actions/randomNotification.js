@@ -6,8 +6,6 @@ export const GET_RANDOM_NOTIFICATION_ERROR = "GET_RANDOM_NOTIFICATION_ERROR"
 export const GET_RANDOM_NOTIFICATION_LOADING = "GET_RANDOM_NOTIFICATION_LOADING"
 
 
-/////random
-
 
 export const getRandomNotificationSuccess = (payload) => {
     return {

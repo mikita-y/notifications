@@ -2,76 +2,84 @@
 import { connect } from 'react-redux'
 import './Paging.css'
 
-import { setPageNumber } from '../../../../actions/notificationList'
+import { setPageNumber, getNotificationList } from '../../../../actions/notificationList'
 
 
-function Paging({ lastPage, selectPage, setPageNumber }) {
+class Paging extends Component{
 
-    if (selectPage > lastPage && lastPage)
-        setPageNumber(lastPage)
+    constructor(props) {
+        super(props);
+    }
 
-    function less() {
-        if (selectPage == 1)
+    componentDidUpdate() {
+        if (this.props.selectPage > this.props.lastPage) {
+            this.props.setPageNumber(this.props.lastPage)
+        }
+        this.props.updateNotificationList();   
+    }
+
+    less() {
+        if (this.props.selectPage == 1)
             return (
-                <button disabled>
+                <button disabled className="paging-blocked-button">
                     {"<<"}
                 </button>
             )
         else
-            return (<button
-                onClick={() => setPageNumber(selectPage - 1)}>
+            return (<button className="paging-button"
+                onClick={() => this.props.setPageNumber(this.props.selectPage - 1)}>
                 {"<<"}
             </button>
             )
     }
 
-    function more() {
-        if (selectPage == lastPage)
+    more() {
+        if (this.props.selectPage == this.props.lastPage)
             return (
-                <button disabled>
+                <button disabled className="paging-blocked-button">
                     {">>"}
                 </button>
             )
         else
-            return (<button
-                onClick={() => setPageNumber(selectPage + 1)}>
+            return (<button className="paging-button"
+                onClick={() => this.props.setPageNumber(this.props.selectPage + 1)}>
                 {">>"}
                 </button>
             )
     }
 
+    render() {
+        return (
+            <div className="paging-container">
+                <button className="paging-button"
+                    onClick={() => this.props.setPageNumber(1)}>
+                    1
+                </button>
+                {this.less()}
 
-    return (
-        <div className="paging-container">
-            <button
-                onClick={() => setPageNumber(1)}>
-                1
-            </button>
-            {less()}
-    
-            <p>{selectPage}</p>
+                <p className="page-number">{this.props.selectPage}</p>
 
-            {more()}
-            <button
-                onClick={() => setPageNumber(lastPage)}>
-                {lastPage}
-            </button>
-        </div>
-
-    )
-
+                {this.more()}
+                <button className="paging-button"
+                    onClick={() => this.props.setPageNumber(this.props.lastPage)}>
+                    {this.props.lastPage}
+                </button>
+            </div>
+        )
+    }
 }
 
 
 
 const mapStateToProps = state => ({
-    lastPage: state.notificationList.list.allPages,
+    lastPage: state.notificationList.list.allPages ? state.notificationList.list.allPages : 1,
     selectPage: state.notificationList.page
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setPageNumber: (number) => dispatch(setPageNumber(number)),
+        updateNotificationList: () => dispatch(getNotificationList())
     }
 }
 

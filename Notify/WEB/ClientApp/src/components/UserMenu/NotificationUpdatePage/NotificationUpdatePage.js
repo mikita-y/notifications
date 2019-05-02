@@ -11,7 +11,8 @@ import { updateNotification, updateNotificationClear, updateNotificationLoading,
 class NotificationUpdatePage extends Component {
 
     state = {
-        ...this.props.notification
+        ...this.props.notification,
+        componentTitle: this.props.notification ? "Update Notification" : "Create Notification"
     }
 
     constructor(props) {
@@ -53,20 +54,18 @@ class NotificationUpdatePage extends Component {
         else
         return (
             <div className="update-page-container">
-                <h1 className="update-title"> Update Notification </h1>
-                <div className="page-container">
-                    <div className="left-page-container">
-                        <div className="notification-size-container">
+                <h1 className="update-title"> {this.state.componentTitle} </h1>
+                <div className="two-bar-container">
+                    <div className="bar-block">
                             <Notification
                                 notification={this.state}
                             />
-                        </div>
                     </div>
 
-                    <div className="right-page-container">
+                    <div className="update-block">
                         <form>
                             <label>
-                                Title:
+                                <h3>Title:</h3>
                                 <input
                                     value={this.state.title ? this.state.title : ""}
                                     name="title"
@@ -76,7 +75,7 @@ class NotificationUpdatePage extends Component {
                             <br />
                             <label>
                                 Body:
-                                <input
+                                <textarea className="notification-update"
                                     value={this.state.body ? this.state.body : ""}
                                     name="body"
                                     onChange={this.updateField}
@@ -103,10 +102,12 @@ class NotificationUpdatePage extends Component {
                         </form>
                     </div>
                 </div>
-                <button 
-                    onClick={this.save}>
-                    Save
-                </button>
+                <div className="save-button">
+                    <button className="submit-button"
+                        onClick={this.save}>
+                        Save
+                    </button>
+                </div>
             </div>
 
         );
@@ -127,7 +128,7 @@ const mapStateToProps = state => ({
     notification: state.notification.activeNotification.notification,
     error: state.notification.updatedNotification.error,
     loading: state.notification.updatedNotification.loading,
-    name: state.authentication.user.userName,
+    name: state.authentication.user ? state.authentication.user.userName : null,
     success: state.notification.updatedNotification.success
 })
 

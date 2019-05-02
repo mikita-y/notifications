@@ -58,14 +58,15 @@ function RegistryForm({ authenticate }) {
                     </label>
                     <br />
                 </form>
-                <button className="submit-button"
-                    onClick={getToken}>
-                    Submit
-                </button>
-                <br />
-                <AuthenticationError />
+                <div className="form-button">
+                    <button className="submit-button"
+                        onClick={getToken}>
+                        Submit
+                    </button>
+                </div>
             </div>
-
+            <br />
+            <AuthenticationError />
         </div>
 
     );

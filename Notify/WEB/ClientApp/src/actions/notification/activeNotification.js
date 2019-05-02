@@ -10,6 +10,8 @@ const SET_NOTIFICATION = "SET_NOTIFICATION"
 const GET_NOTIFICATION_ERROR = "GET_NOTIFICATION_ERROR"
 const GET_NOTIFICATION_LOADING = "GET_NOTIFICATION_LOADING"
 const CLEAR_NOTIFICATION = "CLEAR_NOTIFICATION"
+const SET_UPDATING_FLAG = "CLEAR_NOTIFICATION"
+const SET_CREATING_FLAG = "SET_CREATING_FLAG"
 
 
 
@@ -41,6 +43,12 @@ export const getNotificationLoading = () => {
 }
 
 export const clearNotification = () => {
+    return {
+        type: CLEAR_NOTIFICATION
+    }
+}
+
+export const setUpdatingFlag = () => {
     return {
         type: CLEAR_NOTIFICATION
     }

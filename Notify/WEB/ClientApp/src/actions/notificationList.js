@@ -29,7 +29,6 @@ export const notificationListLoading = () => {
         type: NOTIFICATION_LIST_LOADING,
     }
 }
-/////////////////////////
 
 export const sortNotifications = (payload) => {
     return {
@@ -67,7 +66,6 @@ export const setPageSize = (payload) => {
 }
 
 
-//// thunk action
 export const getNotificationList = () => {
     return (dispatch, getState) => {
         const prop = getState().notificationList;
@@ -109,7 +107,7 @@ const initialNotificationList = {
     list: {
         pageNumber: null,
         allPages: null,
-        notifications: null
+        notifications: []
     },
     sorting: 0,
     filtering: null,
@@ -119,7 +117,6 @@ const initialNotificationList = {
 }
 
 
-//reducer
 export const notificationList = (state = initialNotificationList, action) => {
     switch (action.type) {
         case SET_NOTIFICATION_LIST:

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ServiceLayer.NotificationListService
+﻿namespace ServiceLayer.NotificationListService
 {
     public enum Sorting { AZ, ZA, Newer, Older };
     public enum FilterBy { Title, Body, Image, Picture };
