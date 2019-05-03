@@ -25,14 +25,14 @@ class Filtering extends Component {
 
     render() {
         var options = [
-            { value: "", label: 'No' },
+            { value: 'No', label: 'No' },
             { value: 0, label: 'Title' },
             { value: 1, label: 'Body' },
             { value: 2, label: 'Image' },
-            { value: 3, label: 'Action' }
+            { value: 3, label: 'Icon' }
         ];
         return (
-            <Select
+            <Select 
                 name="form-field-name"
                 value={this.state.option }
                 options={options}

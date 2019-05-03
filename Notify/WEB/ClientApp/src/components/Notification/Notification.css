@@ -18,9 +18,9 @@
 .notification-titles {
     display: flex;
     justify-content: center;
+    color: black;
     align-items: flex-start;
-    margin: 3px;
-    
+    margin: 3px; 
 }
 
 .notification-body {

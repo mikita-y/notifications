@@ -25,14 +25,11 @@ class NotificationUpdatePage extends Component {
 
     componentDidUpdate() {
         if (this.props.success) {
-            const path = `/${this.props.name}`;
+            const path = "/notificationlist";
             this.props.history.push(path);
         }
     }
 
-
-    componentWillUnmount() {
-    }
 
     updateField = e => {
         this.setState({
@@ -42,7 +39,6 @@ class NotificationUpdatePage extends Component {
     };
 
     save = () => {
-
         this.props.updateNotification(this.state)
     }
 
@@ -63,10 +59,11 @@ class NotificationUpdatePage extends Component {
                     </div>
 
                     <div className="update-block">
-                        <form>
+                        <form className="form-font">
                             <label>
-                                <h3>Title:</h3>
+                                Title:
                                 <input
+                                    maxlength="20"
                                     value={this.state.title ? this.state.title : ""}
                                     name="title"
                                     onChange={this.updateField}
@@ -76,6 +73,7 @@ class NotificationUpdatePage extends Component {
                             <label>
                                 Body:
                                 <textarea className="notification-update"
+                                    rows="5"
                                     value={this.state.body ? this.state.body : ""}
                                     name="body"
                                     onChange={this.updateField}
@@ -83,7 +81,7 @@ class NotificationUpdatePage extends Component {
                             </label>
                             <br />
                             <label>
-                                Icon:
+                                Icon(insert link):
                                 <input
                                     value={this.state.icon ? this.state.icon : ""}
                                     name="icon"
@@ -92,7 +90,7 @@ class NotificationUpdatePage extends Component {
                             </label>
                             <br />
                             <label>
-                                Image:
+                                Image(insert link):
                                 <input
                                     value={this.state.image ? this.state.image : ""}
                                     name="image"

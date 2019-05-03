@@ -39,15 +39,25 @@
     height: 12%;
 }
 
+.form-font {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 23px;
+    color: #fff;
+}
+
+    .form-font input {
+        font-size: 19px;
+        width: 120%;
+    }
 
 textarea.notification-update {
     font-family: 'Open Sans Condensed', sans-serif;
     text-decoration: none;
     position: relative;
-    width: 80%;
-    height: 50px;
+    margin: 9px auto;
+    width: 120%;
     display: block;
-    font-size: 10px;
+    font-size: 15px;
     color: #fff;
     border-radius: 6px;
     border: none;

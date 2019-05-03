@@ -16,17 +16,6 @@ const store = createStore(
     rootReducer,
     applyMiddleware(thunk)
 )
-store.subscribe(() => {
-    if (localStorage.getItem("accessToken")) {
-        const user = {
-            token: localStorage.getItem("accessToken"),
-            userId: localStorage.getItem("userId"),
-            userName: localStorage.getItem("userName")
-        };
-        if (!store.getState().authentication.user)
-            store.dispatch(authenticationSetUser(user));
-    }
-})
 
 
 ReactDOM.render(

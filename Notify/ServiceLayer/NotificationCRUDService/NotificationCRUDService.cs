@@ -19,7 +19,7 @@ namespace ServiceLayer.NotificationCRUDService
             var NewNotification = Obj.GetNotification();
             NewNotification.UserId = userId;
             context.Notifications.Add(NewNotification);
-
+            context.SaveChanges();
             var log = NotificationLogsHelper.Creating(NewNotification);
 
             context.NotificationLogs.Add(log);

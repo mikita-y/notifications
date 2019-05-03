@@ -1,7 +1,7 @@
 ﻿namespace ServiceLayer.NotificationListService
 {
     public enum Sorting { AZ, ZA, Newer, Older };
-    public enum FilterBy { Title, Body, Image, Picture };
+    public enum FilterBy { Title, Body, Image, Icon };
 
     public class Criterion
     {

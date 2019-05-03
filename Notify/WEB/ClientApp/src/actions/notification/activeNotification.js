@@ -1,17 +1,12 @@
 ﻿import { combineReducers } from 'redux';
-
 import { updatedNotification } from './updatedNotification';
 import { deletedNotification } from './deletedNotification';
-
-
 
 const GET_NOTIFICATION_SUCCESS = "GET_NOTIFICATION_SUCCESS"
 const SET_NOTIFICATION = "SET_NOTIFICATION"
 const GET_NOTIFICATION_ERROR = "GET_NOTIFICATION_ERROR"
 const GET_NOTIFICATION_LOADING = "GET_NOTIFICATION_LOADING"
 const CLEAR_NOTIFICATION = "CLEAR_NOTIFICATION"
-const SET_UPDATING_FLAG = "CLEAR_NOTIFICATION"
-const SET_CREATING_FLAG = "SET_CREATING_FLAG"
 
 
 
@@ -55,7 +50,6 @@ export const setUpdatingFlag = () => {
 }
 
 
-//// thunk action
 export const getNotification = (id) => {
     return (dispatch) => {
         dispatch(getNotificationLoading());

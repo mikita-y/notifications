@@ -22,7 +22,7 @@ function Authentication({ login }) {
         return (
             <div className="authentication-container">
                 <Logout />
-                <Redirect to={`/${login.userName}`} />
+                <Redirect to="/notificationlist" />
             </div>
         );
 }

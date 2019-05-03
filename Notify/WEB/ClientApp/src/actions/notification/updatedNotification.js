@@ -45,6 +45,7 @@ export const updateNotification = (notification) => {
         else
             path = "update";
 
+
         fetch(`api/notificationcrud/${path}`, {
             method: 'post',
             headers: {
@@ -59,7 +60,6 @@ export const updateNotification = (notification) => {
                 if (!response.ok) {
                     throw new Error
                 }
-                console.log(response)
                 return response.json();
             })
             .then((result) => {

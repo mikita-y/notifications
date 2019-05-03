@@ -5,6 +5,7 @@ import './NotificationList.css'
 import { getNotification, setNotification } from '../../../../actions/notification/activeNotification'
 import { deleteNotification } from '../../../../actions/notification/deletedNotification'
 import { getNotificationList } from '../../../../actions/notificationList'
+import { clearNotificationList } from '../../../../actions/notificationList'
 
 import { withRouter } from 'react-router-dom';
 
@@ -19,7 +20,7 @@ class NotificationList extends Component {
         this.props.updateNotifcationList();
     }
 
-
+    
 
     deleteNotification = (id) => {
         this.props.deleteNotification(id);
@@ -46,12 +47,13 @@ class NotificationList extends Component {
                 </div>
              )
         }
-        else {
+        else if (this.props.notificationList.notifications){
             return (
                 <div className="notification-list-container">
-                    {this.props.notificationList.notifications.map(item => (
+                    { 
+                        this.props.notificationList.notifications.map(item => (
                         <div key={item.id} className="list-case">
-
+                            
                             <span>{item.title} </span>
                             <div className="list-buttons">
                                 <button className="list-button"
@@ -65,7 +67,7 @@ class NotificationList extends Component {
                                  </button>
 
                             </div>
-                        </div>))}
+                        </div>)) }
                     <div className="list-case">
                         <span>New notification </span>
                         <div className="list-buttons">
@@ -78,6 +80,7 @@ class NotificationList extends Component {
                 </div>
             )
         }
+        return null;
     }
 }
 
@@ -94,7 +97,8 @@ const mapDispatchToProps = (dispatch) => {
         setNotification: () => dispatch(setNotification()),
         toggleNotification: (id) => dispatch(getNotification(id)),
         deleteNotification: (id) => dispatch(deleteNotification(id)),
-        updateNotifcationList: () => dispatch(getNotificationList())
+        updateNotifcationList: () => dispatch(getNotificationList()),
+        clear: () => dispatch(clearNotificationList())
     }
 }
 

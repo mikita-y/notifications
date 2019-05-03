@@ -17,21 +17,22 @@ import SearchText from './SearchText';
      render() {
          return (
              <div className="search-panel-container">
-                <table border="1">
+                 <table border="0" >
+                     
                     <tbody>
-                    <tr>
-                        <td> Sorting </td>
-                        <td> FilterBy</td>
-                        <td> SearchText</td>
-                        <td> Paging</td>
+                        <tr>
+                             <td> <h3>Sorting</h3> </td>
+                             <td> <h3>FilterBy</h3></td>
+                             <td> <h3>SearchText</h3></td>
+                             <td> <h3>Paging</h3></td>
                         </tr>
                     </tbody>
                     <tbody>
-                    <tr>
-                            <td> <Sorting /> </td>
-                            <td> <Filtering /> </td>
+                    <tr >
+                            <td width="18%"> <Sorting /> </td>
+                            <td width="18%"> <Filtering /> </td>
                             <td> <SearchText /> </td>
-                            <td> <Paging /> </td>
+                             <td width="18%"> <Paging /> </td>
                     </tr>
                     </tbody>
                 </table>

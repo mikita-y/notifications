@@ -11,7 +11,7 @@ const AppHeader = ({ login }) => {
         return (
             <div className="header-container">
                 <div className="title">
-                    <Link to={`/${login ? login.userName : ""}`}>
+                    <Link to={`/${login ? "notificationlist" : ""}`}>
                         Notification Service 
                     </Link> 
                 </div>

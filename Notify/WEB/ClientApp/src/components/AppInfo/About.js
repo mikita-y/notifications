@@ -20,8 +20,13 @@ function About({ getRandomNotification, notification }) {
         <div className="two-bar-container">
             <div className="bar-block">
                 <div className="about-info">
-                    <h3>Notification Service</h3>
-                    <p>Information about Notification Service</p>
+                    <h1 >Notification Service</h1>
+                    <br />
+                    <br />
+                        <h4> This application will help you design the look of your notifications.</h4>
+                        <h4>You can create, update your notifications and view their history.</h4>
+                        <h4>To start, please register.</h4>
+                    
                 </div>
             </div>
             <div className="bar-block">

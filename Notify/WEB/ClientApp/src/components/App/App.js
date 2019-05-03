@@ -19,7 +19,7 @@ import { authenticationSetUser } from '../../actions/authentication'
 class App extends Component {
 
     componentDidMount() {
-        /*if (localStorage.getItem("accessToken")) {
+        if (localStorage.getItem("accessToken")) {
             const user = {
                 token: localStorage.getItem("accessToken"),
                 userId: localStorage.getItem("userId"),
@@ -27,7 +27,7 @@ class App extends Component {
             };
             if(!this.props.login)
                 this.props.authenticate(user);
-        }*/
+        }
     }
 
     render() {
@@ -40,7 +40,7 @@ class App extends Component {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/registry" component={Registry} />
                         <Route exact path="/contacts" component={Contacts} />
-                        <Route exact path={`/${this.props.login ? this.props.login.userName : null}`} component={UserMenu} />
+                        <Route exact path={`${this.props.login ? "/notificationlist" : null}`} component={UserMenu} />
                         <Route exact path="/update" component={NotificationUpdatePage} />
                         <Route exact path="/create" component={NotificationUpdatePage} />
                     </Switch>
@@ -62,6 +62,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
-
-
-//                        <Route exact path={`/${this.props.login ? `${this.props.login.userName}/update` : ""}`} component={NotificationUpdatePage} /> 

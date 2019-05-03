@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WEB.Model;
 using DataAccessLayer.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 
 namespace WEB.Controllers
@@ -49,6 +46,8 @@ namespace WEB.Controllers
         [Route("registration")]
         public async Task<IActionResult> Registration([FromBody]RegistrModel model)
         {
+            if(model.Email == null || model.Email == "") 
+                return Unauthorized(new List<ErrorModel> { new ErrorModel { Code = 401, Description = "Please, input Email" } });
             User user = new User { Email = model.Email, UserName = model.UserName };
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)

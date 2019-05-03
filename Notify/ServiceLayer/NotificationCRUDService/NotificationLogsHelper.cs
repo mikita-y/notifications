@@ -7,9 +7,8 @@ namespace ServiceLayer.NotificationCRUDService
     {
         public static NotificationLog Creating(Notification notification)
         {
-            // Добавить детали логов позже
              return new NotificationLog
-            {
+             {
                 Date = DateTime.Now,
                 Change = "Creating new notification",
                 Notification = notification

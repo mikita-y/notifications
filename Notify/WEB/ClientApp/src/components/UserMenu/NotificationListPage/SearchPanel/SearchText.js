@@ -18,21 +18,35 @@ class SearchText extends Component {
 
 
         this.props.setSearchText(searchText);
-        this.props.updateNotificationList();
+        if (this.props.isUpdate)
+            this.props.updateNotificationList();
     };
 
     render() {
+        if (this.props.inputActive)
+            return (
+                <input type="text"
+                    placeholder="search"
+                    value={this.state.searchText ? this.state.searchText : ''}
+                    onChange={this.onSearchChange}
+                />
+            );
         return (
             <input type="text"
+                disabled
                 placeholder="search"
                 value={this.state.searchText ? this.state.searchText : ''}
                 onChange={this.onSearchChange}
             />
         );
+
     }
 }
 
-
+const mapStateToProps = state => ({
+    inputActive: state.notificationList.filtering == 2 || state.notificationList.filtering == 3 ? false : true,
+    isUpdate: state.notificationList.filtering != 'No' ? true : false
+})
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -41,4 +55,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(SearchText)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchText)

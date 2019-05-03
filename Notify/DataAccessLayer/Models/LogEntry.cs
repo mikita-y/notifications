@@ -12,16 +12,12 @@ namespace DataAccessLayer.Models
         [Required]
         [Column(TypeName = "datetime")]
         public DateTime Date { get; set; }
-        //[Required]
         [MaxLength(255)]
         public string Thread { get; set; }
-        //[Required]
         [MaxLength(50)]
         public string Level { get; set; }
-        //[Required]
         [MaxLength(255)]
         public string Logger { get; set; }
-        //[Required]
         [MaxLength(4000)]
         public string Message { get; set; }
         [MaxLength(2000)]

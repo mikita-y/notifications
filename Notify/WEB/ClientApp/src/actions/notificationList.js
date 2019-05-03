@@ -8,6 +8,7 @@ export const FILTER_NOTIFICATIONS = 'FILTER_NOTIFICATIONS'
 export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
 export const SET_PAGE_NUMBER = 'SET_PAGE_NUMBER'
 export const SET_PAGE_SIZE = 'SET_PAGE_SIZE'
+export const CLEAR_NOTIFICATION_LIST = 'CLEAR_NOTIFICATION_LIST'
 
 
 export const setNotificationList = (payload) => {
@@ -27,6 +28,12 @@ export const notificationListError = (payload) => {
 export const notificationListLoading = () => {
     return {
         type: NOTIFICATION_LIST_LOADING,
+    }
+}
+
+export const clearNotificationList = () => {
+    return {
+        type: CLEAR_NOTIFICATION_LIST,
     }
 }
 
@@ -73,7 +80,7 @@ export const getNotificationList = () => {
         const body = {
             userId: getState().authentication.user.userId,
             sorting: prop.sorting,
-            filterBy: prop.filtering,
+            filterBy: prop.filtering == 'No' ? null : prop.filtering,
             page: prop.page,
             pageSize: prop.pageSize,
             searchText: prop.searchText
@@ -107,10 +114,10 @@ const initialNotificationList = {
     list: {
         pageNumber: null,
         allPages: null,
-        notifications: []
+        notifications: null
     },
     sorting: 0,
-    filtering: null,
+    filtering: 'No',
     searchText: null,
     page: 1,
     pageSize: 10
@@ -135,6 +142,8 @@ export const notificationList = (state = initialNotificationList, action) => {
             return { ...state, page: action.payload }
         case SET_PAGE_SIZE:
             return { ...state, pageSize: action.payload }
+        case CLEAR_NOTIFICATION_LIST:
+            return { initialNotificationList }
         default:
             return state
     }

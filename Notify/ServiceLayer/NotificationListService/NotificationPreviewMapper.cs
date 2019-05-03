@@ -29,7 +29,7 @@ namespace ServiceLayer.NotificationListService
                     {
                         notifications = notifications.SelectMany(n =>  n.NotificationLogs ,
                             (n, l) =>  new { notification = n, Log = l })
-                          .Where(p => p.Log.Date == p.notification.NotificationLogs.Max(l => l.Date))  // Max - дата изменения, Min - дата создания
+                          .Where(p => p.Log.Date == p.notification.NotificationLogs.Max(l => l.Date))  
                           .OrderByDescending(p => p.Log.Date).Select(p => p.notification);
                     }
                     break;
@@ -37,7 +37,7 @@ namespace ServiceLayer.NotificationListService
                     {
                         notifications = notifications.SelectMany(n => n.NotificationLogs,
                             (n, l) => new { notification = n, Log = l })
-                          .Where(p => p.Log.Date == p.notification.NotificationLogs.Max(l => l.Date))  // Max - дата изменения, Min - дата создания
+                          .Where(p => p.Log.Date == p.notification.NotificationLogs.Max(l => l.Date))  
                           .OrderBy(p => p.Log.Date)
                           .Select(p => p.notification);
                     }
@@ -53,8 +53,6 @@ namespace ServiceLayer.NotificationListService
             FilterBy? filterby = criterion.Filterby;
             string searchtext = criterion.SearchText;
             if(filterby != null)
-                //foreach (FilterBy f in filterby)
-                //{
                     switch (filterby)
                     {
                         case FilterBy.Title:
@@ -65,7 +63,7 @@ namespace ServiceLayer.NotificationListService
                             if (searchtext != null)
                                 notifications = notifications.Where(n => n.Body.Contains(searchtext));
                             break;
-                        case FilterBy.Picture:
+                        case FilterBy.Icon:
                             notifications = notifications.Where(n => n.Icon != null);
                             break;
                         case FilterBy.Image:
@@ -73,7 +71,6 @@ namespace ServiceLayer.NotificationListService
                             break;
                         default: throw new Exception("Exception in NotificationServise.Filter");
                     }
-                //}
             return notifications;
         }
         

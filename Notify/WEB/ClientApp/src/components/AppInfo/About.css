@@ -8,15 +8,19 @@
     height: 30%;
 }
 
-.about-contacts {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    width: 100%;
-    height: 100%;
-}
+    .about-info h4,h1{
+        color: black;
+    }
+
+    .about-contacts {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        height: 100%;
+    }
 
 .contacts {
     display: flex;
@@ -32,4 +36,13 @@
 .contacts-picture {
     width: 30px;
     height: 30px;
+}
+
+
+.information {
+    font-family: 'Open Sans Condensed', sans-serif;
+    text-decoration: none;
+    position: relative;
+    margin: 9px auto;
+    font-size: 15px;
 }

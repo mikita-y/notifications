@@ -32,6 +32,7 @@ function RegistryForm({ authenticate }) {
                     <label>
                         <h4>Email:</h4>
                         <input
+                            required
                             value={form.email}
                             name="email"
                             onChange={updateField}

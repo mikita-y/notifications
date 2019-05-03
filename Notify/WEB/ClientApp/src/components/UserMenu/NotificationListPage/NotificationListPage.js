@@ -14,6 +14,10 @@ import { getNotificationList } from '../../../actions/notificationList'
 
 class NotificationListPage extends Component {
 
+    componentDidMount() {
+        this.props.getNotificationList();
+    }
+
     render() {
         return (
             <div className="list-page-container">
