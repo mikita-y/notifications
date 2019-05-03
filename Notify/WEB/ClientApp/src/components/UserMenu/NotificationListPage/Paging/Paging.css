@@ -1,0 +1,53 @@
+﻿.paging-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.page-number {
+    color: white;
+    font-size: 23px;
+    background-color: antiquewhite;
+    color: black;
+    margin: 3%;
+    padding: .0em 1em;
+    outline: none;
+    border: 2px solid;
+    border-radius: 1px;
+}
+
+.paging-button {
+    display: inline-block;
+    color: white;
+    background: black;
+    font-weight: 700;
+    text-decoration: none;
+    user-select: none;
+    margin: 3%;
+    padding: .5em 2em;
+    outline: none;
+    border: 2px solid;
+    border-radius: 1px;
+    transition: 0.2s;
+}
+
+    .paging-button:hover {
+        background-color: antiquewhite;
+        color: black;
+    }
+
+.paging-blocked-button {
+    display: inline-block;
+    color: white;
+    background: black;
+    font-weight: 700;
+    text-decoration: none;
+    user-select: none;
+    margin: 3%;
+    padding: .5em 2em;
+    outline: none;
+    border: 2px solid;
+    border-radius: 1px;
+    transition: 0.2s;
+}

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DataAccessLayer.Models;
+﻿using DataAccessLayer.Models;
 using DataAccessLayer;
 using DataAccessLayer.DbContext;
 using System.Linq;
@@ -23,9 +20,9 @@ namespace ServiceLayer.NotificationListService
             IQueryable<Notification> notifications = context.Notifications.Where(x => x.UserId == criterion.userId);
 
             notifications = context.Notifications.Where(x => x.UserId == criterion.userId).SortingBy(criterion).Filter(criterion);
-            
+
             int allPages = notifications.Count() / criterion.pageSize;
-            if ((notifications.Count() % criterion.pageSize) > 0)
+            if ((notifications.Count() % criterion.pageSize) >= 0)
                 allPages++;
             if (criterion.pageSize == 0)
                 criterion.pageSize = 10;

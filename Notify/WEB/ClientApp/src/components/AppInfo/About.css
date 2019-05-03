@@ -1,0 +1,48 @@
+﻿.about-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    align-items: center;
+    width: 60%;
+    height: 30%;
+}
+
+    .about-info h4,h1{
+        color: black;
+    }
+
+    .about-contacts {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    align-items: center;
+    width: 40%;
+    height: 40%;
+    border-radius: 20px;
+}
+
+.contacts-picture {
+    width: 30px;
+    height: 30px;
+}
+
+
+.information {
+    font-family: 'Open Sans Condensed', sans-serif;
+    text-decoration: none;
+    position: relative;
+    margin: 9px auto;
+    font-size: 15px;
+}

@@ -1,8 +1,5 @@
 ﻿using DataAccessLayer.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ServiceLayer.NotificationCRUDService
 {
@@ -10,9 +7,8 @@ namespace ServiceLayer.NotificationCRUDService
     {
         public static NotificationLog Creating(Notification notification)
         {
-            // Добавить детали логов позже
              return new NotificationLog
-            {
+             {
                 Date = DateTime.Now,
                 Change = "Creating new notification",
                 Notification = notification
@@ -29,12 +25,12 @@ namespace ServiceLayer.NotificationCRUDService
             };
             if (DatabaseNotification.Title != UserNotification.Title)
             {
-                Changing += "Title update\n";
+                Changing += $"Title update:\nOld title: {DatabaseNotification.Title}, new title: {UserNotification.Title}.\n";
                 DatabaseNotification.Title = UserNotification.Title;
             }
             if (DatabaseNotification.Body != UserNotification.Body)
             {
-                Changing += "Body update\n";
+                Changing += $"Body update\nOld body: {DatabaseNotification.Body}, new body: {UserNotification.Body}.\n";
                 DatabaseNotification.Body = UserNotification.Body;
             }
             if (DatabaseNotification.Icon != UserNotification.Icon)
@@ -47,7 +43,7 @@ namespace ServiceLayer.NotificationCRUDService
                 Changing += "Image update\n";
                 DatabaseNotification.Image = UserNotification.Image;
             }
-            //разработать как кнопки будут удаляться и добавляться в бд
+
             if(DatabaseNotification.NotificationActions == null)
             {
                 if (UserNotification.NotificationActions != null)
@@ -64,7 +60,7 @@ namespace ServiceLayer.NotificationCRUDService
 
                 }
             }
-            else //(DatabaseNotification.NotificationActions.SequenceEqual(UserNotification.NotificationActions))
+            else
             { 
                 Changing += "Action update\n";
                 DatabaseNotification.NotificationActions = UserNotification.NotificationActions;

@@ -1,79 +1,39 @@
-﻿import React, { Component } from 'react';
+﻿import React from 'react';
+import './Notification.css'
 
-import NotificationService from '../../services/NotificationService';
 
 
-export default class Notification extends Component {
+export default function Notification( {notification = null, error = null } ){
 
-    notificationService = new NotificationService();
 
-    state = {
-        Id: null,
-        Title: null,
-        Body: null,
-        Icon: null,
-        Image: null,
-        NotificationActions: null
-    };
-
-    constructor(props) {
-        super(props);
+    function icon() {
+        return notification.icon ? <img className="notification-icon" src={notification.icon} /> : null;
     }
 
-    updateNotification = (id) => {
-
-        this.notificationService
-            .getNotification(id)
-            .then((obj) => {
-                this.setState({
-                    Id: obj.id,
-                    Title: obj.title,
-                    Body: obj.body,
-                    Icon: obj.icon,
-                    Image: obj.image,
-                    NotificationActions: obj.notifications
-                });
-            });
+    function image() {
+        return notification.image ? <img className="notification-image" src={notification.image} /> : null;
     }
-    render() {
 
-        const { id } = this.props;
-        if(id!=null)
-            this.updateNotification(id);
-
-        if (!id) {
+    if (error) {
+        return <h1>Error</h1>
+    }
+    else
+        if (!notification) {
             return null
         }
         else {
             return (
-                <div>
-                    <table border="1">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    {this.state.Title}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {this.state.Body}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {this.state.Icon}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {this.state.Image}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div className="notification-container">
+                    <div className="notification-title">
+                        {icon()}
+                        <h4 className="notification-titles">{notification.title} </h4>
+                    </div>
+                    <div className="notification-body">
+                        <p className="notification-bodies">{notification.body} </p>
+                        {image()}
+                    </div>
                 </div>
+
             )
         }
-    }
-
 }

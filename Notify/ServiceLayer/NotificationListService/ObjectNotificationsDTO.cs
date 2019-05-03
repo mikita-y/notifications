@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ServiceLayer.NotificationListService
 {
@@ -8,6 +6,6 @@ namespace ServiceLayer.NotificationListService
     {
         public int PageNumber { get; set; }
         public int AllPages { get; set; }
-        public List<NotificationDTO> Notifications{ get; set; }
+        public List<NotificationPreview> Notifications{ get; set; }
     }
 }

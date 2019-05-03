@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.NotificationCRUDService;
+using WEB.Model;
 
 namespace WEB.Controllers
 {
@@ -20,8 +18,8 @@ namespace WEB.Controllers
             _service = servise;
         }
 
-
         // GET api/notificationcrud/5
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -31,38 +29,53 @@ namespace WEB.Controllers
             return Ok(notification);
         }
 
-        // POST api/users
-        [HttpPost]
-        public IActionResult Post([FromBody]NotificationDetailDTO obj)
+        // POST api/notificationcrud
+        [Authorize]
+        [HttpPost("[action]")]
+        public IActionResult Create([FromBody]NotificationModel obj)
+        {
+            if (obj == null)
+            {
+                return BadRequest();
+            }
+            
+            _service.Create(obj.Notification, obj.UserId);
+            return Ok(obj.Notification);
+        }
+
+        // PUT api/notificationcrud/
+        [Authorize]
+        [HttpPost("[action]")]
+        public IActionResult Update([FromBody]NotificationModel obj)
         {
             if (obj == null)
             {
                 return BadRequest();
             }
 
-            _service.Create(obj);
-            return Ok(obj);
+            
+            _service.Update(obj.Notification);
+            //return BadRequest();
+            return Ok(obj.Notification);
         }
 
-        // PUT api/users/
-        [HttpPut]
-        public IActionResult Put([FromBody]NotificationDetailDTO obj)
-        {
-            if (obj == null)
-            {
-                return BadRequest();
-            }
-
-            _service.Update(obj);
-            return Ok(obj);
-        }
-
-        // DELETE api/users/5
+        // DELETE api/notificationcrud/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _service.Delete(id);
             return Ok();
         }
+
+        [HttpGet("[action]")]
+        public IActionResult GetRandomNotification()
+        {
+            var notification = _service.GetRandomNotification();
+            if (notification == null)
+                return NotFound();
+            return Ok(notification);
+        }
+
     }
 }

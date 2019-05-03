@@ -1,0 +1,10 @@
+﻿body {
+    display: flex;
+    margin: 0px;
+    min-height: 969px;
+    background-image: url(./bg.jpg);
+    background-position: center top;
+}
+#root {
+    width: 1920px;
+}

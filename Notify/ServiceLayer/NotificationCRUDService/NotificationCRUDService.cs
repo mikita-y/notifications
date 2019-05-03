@@ -1,9 +1,7 @@
 ﻿using DataAccessLayer.DbContext;
-using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ServiceLayer.NotificationCRUDService
 {
@@ -16,22 +14,24 @@ namespace ServiceLayer.NotificationCRUDService
             context = _context;
         }
 
-        public void Create(NotificationDetailDTO Obj)
+        public void Create(NotificationDetailDTO Obj, string userId)
         {
             var NewNotification = Obj.GetNotification();
+            NewNotification.UserId = userId;
             context.Notifications.Add(NewNotification);
-
+            context.SaveChanges();
             var log = NotificationLogsHelper.Creating(NewNotification);
 
             context.NotificationLogs.Add(log);
             context.SaveChanges();
         }
 
-        public NotificationDetailDTO Read(int Id)
+        public NotificationDetailDTO Read(int id)
         {
-            var notification = context.Notifications.Find(Id);
-            if (notification == null)
-                throw new Exception("Notification not found");
+            var notification = context.Notifications
+                .Include(n => n.NotificationActions)
+                .Include(n => n.NotificationLogs)
+                .Where(n => n.Id == id).First();
             return notification.GetNotificationDetailDTO();
         }
 
@@ -47,12 +47,22 @@ namespace ServiceLayer.NotificationCRUDService
 
         public void Delete(int Id)
         {
-            //context.NotificationLogs.RemoveRange(context.NotificationLogs.Where(log => log.NotificationId == Id));
             var notification = context.Notifications.Find(Id);
             if (notification == null)
                 throw new Exception("Notification not found");
             context.Notifications.Remove(notification);
             context.SaveChanges();
+        }
+
+
+        public NotificationDetailDTO GetRandomNotification()
+        {
+            var count = context.Notifications.Count();
+            Random rnd = new Random(DateTime.Now.Second);
+            var id = rnd.Next(0, count);
+            var notification = context.Notifications.Include(n => n.NotificationActions).Skip(id).First();
+
+            return notification.GetNotificationDetailDTO();
         }
     }
 }

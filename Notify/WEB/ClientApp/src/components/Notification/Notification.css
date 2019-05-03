@@ -1,0 +1,53 @@
+﻿.notification-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: antiquewhite;
+    width: 100%;
+    margin: 10px;
+}
+
+.notification-icon {
+    display: flex;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+.notification-titles {
+    display: flex;
+    justify-content: center;
+    color: black;
+    align-items: flex-start;
+    margin: 3px; 
+}
+
+.notification-body {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    color: black;
+    margin: 4px;
+    align-items: stretch;
+
+}
+
+.notification-bodies {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    color: black;
+    margin: 4px;
+    align-items: stretch;
+
+}
+
+.notification-image {
+    display: flex;
+    justify-content: center;
+    color: antiquewhite;
+    width: 40%;
+    height: 100%;
+    margin: 8px;
+}

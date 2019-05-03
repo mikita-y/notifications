@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WEB.Model;
 using DataAccessLayer.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace WEB.Controllers
 {
@@ -19,37 +17,44 @@ namespace WEB.Controllers
     public class AuthenticationController : Controller
     {
         private UserManager<User> userManager;
+        public IConfiguration Configuration { get; }
 
-        public AuthenticationController(UserManager<User> userManager)
+
+        public AuthenticationController(UserManager<User> userManager, IConfiguration configuration)
         {
+            Configuration = configuration;
             this.userManager = userManager;
         }
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<IActionResult> Login([FromBody]LoginModel model)
         {
-            var user = await userManager.FindByNameAsync(model.UserName);
-
-            if(user != null && await userManager.CheckPasswordAsync(user, model.Password))
+            var user = await userManager.FindByNameAsync(model.userName);
+            if (user == null)
             {
-                return Token(user);
+                return Unauthorized(new List<ErrorModel> { new ErrorModel { Code = 401, Description = "Name not found" } });
             }
-            return Unauthorized();
+            if (!await userManager.CheckPasswordAsync(user, model.password))
+            {
+                return Unauthorized(new List<ErrorModel> { new ErrorModel { Code = 401, Description = "Incorrect password" } });
+            }
+            return Token(user);
         }
 
         [HttpPost]
         [Route("registration")]
-        public async Task<IActionResult> Registration(LoginModel model)
+        public async Task<IActionResult> Registration([FromBody]RegistrModel model)
         {
-            User user = new User { UserName = model.UserName };
-            // добавляем пользователя
+            if(model.Email == null || model.Email == "") 
+                return Unauthorized(new List<ErrorModel> { new ErrorModel { Code = 401, Description = "Please, input Email" } });
+            User user = new User { Email = model.Email, UserName = model.UserName };
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
                 return Token(user);
             }
-            return Unauthorized();
+            return Unauthorized(result.Errors);
         }
 
         private IActionResult Token(User user)
@@ -60,11 +65,11 @@ namespace WEB.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySuperSecurekey"));
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]));
 
             var token = new JwtSecurityToken(
-                issuer: "http://localhost:44391",
-                audience: "http://localhost:44391",
+                issuer: Configuration["Jwt:Issuer"],
+                audience: Configuration["Jwt:Audience"],
                 expires: DateTime.UtcNow.AddHours(1),
                 claims: claims,
                 signingCredentials: new Microsoft.IdentityModel.Tokens.SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
@@ -73,10 +78,8 @@ namespace WEB.Controllers
             {
                 access_token = new JwtSecurityTokenHandler().WriteToken(token),
                 userId = user.Id
-                //expiration = token.ValidTo   
             });
         }
-
 
     }
 }
